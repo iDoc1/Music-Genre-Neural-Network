@@ -1,5 +1,5 @@
 # Author: Ian Docherty
-# Description: This program uses the raw datasets to train and test a variety
+# Description: This program uses the raw or agumented datasets to train and test a variety
 #              of classical machine learning models, then prints the results
 
 import numpy as np
@@ -31,26 +31,26 @@ def train(x_train, y_train, x_test, y_test):
     print("Random Forest (trees=5): ", end="")
     run_model(x_train, y_train, x_test, y_test, RandomForestClassifier(n_estimators=5))
 
-    print("Random Forest (trees=50): ", end="")
-    run_model(x_train, y_train, x_test, y_test, RandomForestClassifier(n_estimators=50))
-
-    print("Random Forest (trees=500): ", end="")
-    run_model(x_train, y_train, x_test, y_test, RandomForestClassifier(n_estimators=500))
-
-    print("LinearSVM (C=0.01): ", end="")
-    run_model(x_train, y_train, x_test, y_test, LinearSVC(C=0.01))
-
-    print("LinearSVM (C=0.1): ", end="")
-    run_model(x_train, y_train, x_test, y_test, LinearSVC(C=0.1))
+    # print("Random Forest (trees=50): ", end="")
+    # run_model(x_train, y_train, x_test, y_test, RandomForestClassifier(n_estimators=50))
+    #
+    # print("Random Forest (trees=500): ", end="")
+    # run_model(x_train, y_train, x_test, y_test, RandomForestClassifier(n_estimators=500))
+    #
+    # print("LinearSVM (C=0.01): ", end="")
+    # run_model(x_train, y_train, x_test, y_test, LinearSVC(C=0.01))
+    #
+    # print("LinearSVM (C=0.1): ", end="")
+    # run_model(x_train, y_train, x_test, y_test, LinearSVC(C=0.1))
 
 
 def main():
 
     # Load first two dimensions of data (last dim is only for Tensorflow models)
-    x_train = np.load("raw_split_datasets/gtzan_raw_split_train_audio.npy")[:, :, 0]
-    y_train = np.load("raw_split_datasets/gtzan_raw_split_train_labels.npy")
-    x_test = np.load("raw_split_datasets/gtzan_raw_split_test_audio.npy")[:, :, 0]
-    y_test = np.load("raw_split_datasets/gtzan_raw_split_test_labels.npy")
+    x_train = np.load("aug_split_datasets/gtzan_aug_split_train_audio.npy")[:, :, 0]
+    y_train = np.load("aug_split_datasets/gtzan_aug_split_train_labels.npy")
+    x_test = np.load("aug_split_datasets/gtzan_aug_split_test_audio.npy")[:, :, 0]
+    y_test = np.load("aug_split_datasets/gtzan_aug_split_test_labels.npy")
 
     # Scale data to the range to be in absolute value range [0, 1]
     x_train = (x_train.astype("float32") + 32768) / 65536  # 32768 is max 16 bit integer value in audio files

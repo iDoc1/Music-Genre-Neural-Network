@@ -1,5 +1,5 @@
 # Author: Ian Docherty
-# Description: This program takes the split audio files and produces an additional 19
+# Description: This program takes the split audio files and produces an additional 3
 #              augmented audio files by applying time shift, random noise, pitch shift,
 #              and time lengthening/compressing to the original audio
 #
@@ -33,8 +33,8 @@ def augment_audio(file_list):
         aug_file_list.append(orig_file_path + " " + label)
         write(orig_file_path, wav[0], wav[1])
 
-        # Create 19 augmented samples
-        for aug_index in range(19):
+        # Create 3 additional augmented samples
+        for aug_index in range(3):
             aug_audio = random_augment(wav)
             aug_file_path = "./augmented_split_audio/" + wav_file_name + ".aug" + str(aug_index) + ".wav"
             write(aug_file_path, wav[0], aug_audio.astype(wav[1].dtype))
@@ -48,7 +48,7 @@ def augment_audio(file_list):
 
 def random_augment(wav):
     samp_rate = wav[0]
-    sound_data = wav[1].astype("float32")
+    sound_data = wav[1].astype('float32')
 
     # Perform shift by at most 0.25 seconds with a 50% probability
     if random.random() < 0.5:
@@ -84,7 +84,7 @@ def random_augment(wav):
 
         # Add zeroes if audio was compressed
         else:
-            sound_copy = np.zeros(wav[1].shape[0], dtype="float32")
+            sound_copy = np.zeros(wav[1].shape[0], dtype='float32')
             sound_copy[:sound_data.shape[0]] = sound_data  # Leave the end of array as zeroes
             sound_data = sound_copy.copy()
 

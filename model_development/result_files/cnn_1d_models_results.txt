@@ -1,0 +1,29 @@
+1D shallow model, kernel_size=3: Test data accuracy: 0.3311111032962799
+1D shallow model, kernel_size=5: Test data accuracy: 0.2844444513320923
+1D shallow model, kernel_size=7: Test data accuracy: 0.3199999928474426
+1D shallow model, kernel_size=9: Test data accuracy: 0.30222222208976746
+1D shallow model, kernel_size=11: Test data accuracy: 0.31111112236976624
+
+1D medium model, kernel_size=3: Test data accuracy: 0.3955555558204651
+1D medium model, kernel_size=5: Test data accuracy: 0.3888888955116272
+1D medium model, kernel_size=7: Test data accuracy: 0.35333332419395447
+1D medium model, kernel_size=9: Test data accuracy: 0.35555556416511536
+1D medium model, kernel_size=11: Test data accuracy: 0.4000000059604645
+
+1D deep0 model, kernel_size=3: Test data accuracy: 0.4422222077846527
+1D deep0 model, kernel_size=5: Test data accuracy: 0.4422222077846527
+1D deep0 model, kernel_size=7: Test data accuracy: 0.47333332896232605
+1D deep0 model, kernel_size=9: Test data accuracy: 0.48444443941116333
+1D deep0 model, kernel_size=11: Test data accuracy: 0.47555556893348694
+
+1D deep1 model, kernel_size=3: Test data accuracy: 0.504444420337677
+1D deep1 model, kernel_size=5: Test data accuracy: 0.5444444417953491
+1D deep1 model, kernel_size=7: Test data accuracy: 0.5777778029441833
+1D deep1 model, kernel_size=9: Test data accuracy: 0.5311111211776733
+1D deep1 model, kernel_size=11: Test data accuracy: 0.5577777624130249
+
+1D deep2 model, kernel_size=3: Test data accuracy: 0.5066666603088379
+1D deep2 model, kernel_size=5: Test data accuracy: 0.54666668176651
+1D deep2 model, kernel_size=7: Test data accuracy: 0.5222222208976746
+1D deep2 model, kernel_size=9: Test data accuracy: 0.54666668176651
+1D deep2 model, kernel_size=11: Test data accuracy: 0.4533333480358124
