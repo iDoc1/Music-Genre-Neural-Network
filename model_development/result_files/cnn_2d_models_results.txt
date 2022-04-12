@@ -1,0 +1,51 @@
+********************
+Results for image size 100x160 using original split dataset
+
+2D deep0 model, kernel_size=3x3: Test data accuracy: 0.7666666507720947
+2D deep0 model, kernel_size=5x5: Test data accuracy: 0.7377777695655823
+2D deep0 model, kernel_size=7x7: Test data accuracy: 0.7044444680213928
+
+2D deep1 model, kernel_size=3x3: Test data accuracy: 0.7511110901832581
+2D deep1 model, kernel_size=5x5: Test data accuracy: 0.757777750492096
+2D deep1 model, kernel_size=7x7: Test data accuracy: 0.7400000095367432
+
+2D deep2 model, kernel_size=3x3: Test data accuracy: 0.7555555701255798
+2D deep2 model, kernel_size=5x5: Test data accuracy: 0.746666669845581
+2D deep2 model, kernel_size=7x7: Not compatible with 7x7
+
+2D shallow model, kernel_size = 3x3: Test data accuracy: 0.7444444298744202
+
+********************
+Results for image size 150x240 using original split dataset
+
+2D deep0 model, kernel_size=3x3: Test data accuracy: 0.7177777886390686
+
+2D deep1 model, kernel_size=3x3:
+
+2D deep2 model, kernel_size=3x3:
+
+********************
+Results for image size 100x160 using augmented dataset
+
+2D deep0 model, kernel_size=3x3: Test data accuracy: 0.699999988079071
+
+********************
+Experiments with deep0 architecture with 3x3 kernel and 100x160 images:
+Change learning rate from default 0.001 to 0.0001: Test data accuracy: 0.742222249507904
+Change learning rate from default 0.001 to 0.0001, epochs to 32: Test data accuracy: 0.7777777910232544
+Change learning rate from default 0.001 to 0.0005, epochs to 24: Test data accuracy: 0.7911111116409302
+Change learning rate from default 0.001 to 0.0005, epochs to 24, initializer to HE_normal: Test data accuracy: 0.8066666722297668
+
+Change learning rate from default 0.001 to 0.0005, epochs at 16 again, add batch normalization: Test data accuracy: 0.648888885974884 (with BIG fluctuations in val accuracy)
+Change learning rate from default 0.0001, epochs at 16, keep batch normalization: Test data accuracy: 0.7355555295944214 (smaller jumps in val accuracy)
+
+>>>Perhaps not enough validation data, so hard to tell if training is working due to small test set. Now use 80:20 split data and repeat above experiments:
+Change learning rate from default 0.001 to 0.0001: Test data accuracy: 0.70333331823349
+Change learning rate from default 0.001 to 0.0001, epochs at 16 again, add batch normalization: Test data accuracy: 0.503333330154419
+
+>>> That didn't work, go back to 90:10 splits. Start trying to optimize the highest performing model
+Change learning rate from default 0.001 to 0.0005, epochs to 24, initializer to HE_normal, add batch_normalization and keep dropout: Test data accuracy: 0.6200000047683716
+
+>>> Time to try something else. Use STFT as suggested here: https://www.isca-speech.org/archive_v0/Interspeech_2016/pdfs/1236.PDF
+
+

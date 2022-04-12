@@ -1,7 +1,7 @@
 # Author: Ian Docherty
 # Description: This program takes the split audio files and produces an additional 3
 #              augmented audio files by applying time shift, random noise, pitch shift,
-#              and time lengthening/compressing to the original audio
+#              and time lengthening/compressing to the original audio at random.
 #
 # Citation: Portions of this code have been adapted from chapter 15 from the following textbook
 #   Title: Practical Deep Learning: A Python-Based Introduction

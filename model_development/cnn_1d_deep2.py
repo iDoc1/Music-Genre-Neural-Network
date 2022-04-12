@@ -66,7 +66,7 @@ def main():
                   optimizer=keras.optimizers.Adam(),
                   metrics=['accuracy'])
 
-    # Evaluate using first half of test data for validation
+    # Train using first half of test data for validation
     test_data_num_samples = x_test.shape[0]
     validation_data = (x_test[:(test_data_num_samples // 2)], y_test[:(test_data_num_samples // 2)])
     model.fit(x_train, y_train,
