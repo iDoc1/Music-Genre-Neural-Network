@@ -33,7 +33,7 @@ def build_spectrogram_datasets(filelist):
         source_file, label = file_path.split(" ")
 
         # Use sox to create spectrogram image in current directory
-        os.system("sox %s -n spectrogram" % source_file)
+        os.system("sox %s -n spectrogram -z 60" % source_file)  # High contrast
         image_arr = np.array(Image.open("spectrogram.png").convert('RGB'))
 
         # Extract the spectrogram image by eliminating the borders and info section
@@ -56,24 +56,24 @@ def build_spectrogram_datasets(filelist):
     # Get dataset arrays that are uniformly balanced by each class
     train_data, train_labels, test_data, test_labels = get_balanced_datasets(image_data, labels, 90)
 
-    np.save("./spectrogram_100x160_aug_datasets/gtzan_spect_train_images.npy", train_data)
-    np.save("./spectrogram_100x160_aug_datasets/gtzan_spect_train_labels.npy", train_labels)
-    np.save("./spectrogram_100x160_aug_datasets/gtzan_spect_test_images.npy", test_data)
-    np.save("./spectrogram_100x160_aug_datasets/gtzan_spect_test_labels.npy", test_labels)
+    np.save("./spectrogram_100x160_hc_datasets/gtzan_spect_train_images.npy", train_data)
+    np.save("./spectrogram_100x160_hc_datasets/gtzan_spect_train_labels.npy", train_labels)
+    np.save("./spectrogram_100x160_hc_datasets/gtzan_spect_test_images.npy", test_data)
+    np.save("./spectrogram_100x160_hc_datasets/gtzan_spect_test_labels.npy", test_labels)
 
 
 def main():
 
     # Create output directories
     try:
-        shutil.rmtree("spectrogram_100x160_aug_datasets")
+        shutil.rmtree("spectrogram_100x160_hc_datasets")
     except FileNotFoundError:
-        os.mkdir("spectrogram_100x160_aug_datasets")
+        os.mkdir("spectrogram_100x160_hc_datasets")
     else:
-        os.mkdir("spectrogram_100x160_aug_datasets")
+        os.mkdir("spectrogram_100x160_hc_datasets")
 
     # Read file list for split audio files then save spectrogram datasets
-    all_file_list = [file.rstrip() for file in open("gtzan_aug_split_filelist.txt")]
+    all_file_list = [file.rstrip() for file in open("gtzan_raw_split_filelist.txt")]
     build_spectrogram_datasets(all_file_list)
 
 

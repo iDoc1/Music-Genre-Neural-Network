@@ -46,6 +46,9 @@ Change learning rate from default 0.001 to 0.0001, epochs at 16 again, add batch
 >>> That didn't work, go back to 90:10 splits. Start trying to optimize the highest performing model
 Change learning rate from default 0.001 to 0.0005, epochs to 24, initializer to HE_normal, add batch_normalization and keep dropout: Test data accuracy: 0.6200000047683716
 
->>> Time to try something else. Use STFT as suggested here: https://www.isca-speech.org/archive_v0/Interspeech_2016/pdfs/1236.PDF
+>>> Time to try something else. Create high contrast spectrograms to possibly filter out less impactful areas of image.
+Change learning rate from default 0.001 to 0.0005, epochs to 11, initializer to HE_normal: Test data accuracy: 0.7244444489479065
 
+>>> Final Model
+Change learning rate from default 0.001 to 0.0005, epochs to 24, initializer to HE_normal: 0.7822222113609314
 

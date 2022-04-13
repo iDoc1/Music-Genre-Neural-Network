@@ -73,6 +73,7 @@ def main():
     score = model.evaluate(x_test[(test_data_num_samples // 2):], y_test[(test_data_num_samples // 2):],
                            verbose=0)
     print("Test data accuracy:", score[1])
+    model.save("./final_model/gtzan_2d_cnn_deep0.h5")
 
 
 if __name__ == "__main__":
