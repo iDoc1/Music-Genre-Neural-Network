@@ -49,6 +49,10 @@ Change learning rate from default 0.001 to 0.0005, epochs to 24, initializer to 
 >>> Time to try something else. Create high contrast spectrograms to possibly filter out less impactful areas of image.
 Change learning rate from default 0.001 to 0.0005, epochs to 11, initializer to HE_normal: Test data accuracy: 0.7244444489479065
 
->>> Final Model
-Change learning rate from default 0.001 to 0.0005, epochs to 24, initializer to HE_normal: 0.7822222113609314
+>>> Final Model testing
+Change learning rate from default 0.001 to 0.0005, epochs to 24, initializer to HE_normal: Test data accuracy: 0.7822222113609314
+
+>>> Reduced epochs to 20 since that's about where validation accuracy started to go back down
+Change learning rate from default 0.001 to 0.0005, epochs to 20, initializer to HE_normal: Test data accuracy: 0.8088889122009277
+
 

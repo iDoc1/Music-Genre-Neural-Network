@@ -18,7 +18,7 @@ from keras.layers import Conv2D, MaxPooling2D
 
 BATCH_SIZE = 16
 NUM_CLASSES = 10
-EPOCHS = 24
+EPOCHS = 20
 IMAGE_ROWS = 100
 IMAGE_COLS = 160
 INPUT_SHAPE = (IMAGE_ROWS, IMAGE_COLS, 3)  # The 3 signifies color images
@@ -73,7 +73,7 @@ def main():
     score = model.evaluate(x_test[(test_data_num_samples // 2):], y_test[(test_data_num_samples // 2):],
                            verbose=0)
     print("Test data accuracy:", score[1])
-    model.save("./final_model/gtzan_2d_cnn_deep0.h5")
+    model.save("gtzan_2d_cnn_deep0.h5")
 
 
 if __name__ == "__main__":
