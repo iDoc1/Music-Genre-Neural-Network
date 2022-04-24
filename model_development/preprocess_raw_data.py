@@ -24,7 +24,7 @@ def build_numpy_dataset(file_list, train_or_test):
     for index, file in enumerate(file_list):
         file_path, label = file.split(" ")
 
-        # Keep only the entire 3 seconds at every 50th data point
+        # Keep only the first 3 seconds at every 50th data point
         dataset[index, :, 0] = read(file_path)[1][:AUDIO_LENGTH:SAMPLE_WIDTH]
         labels[index] = int(label)
 

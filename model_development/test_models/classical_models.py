@@ -1,5 +1,5 @@
 # Author: Ian Docherty
-# Description: This program uses the raw or agumented datasets to train and test a variety
+# Description: This script uses the given datasets to train and test a variety
 #              of classical machine learning models, then prints the results
 
 import numpy as np
@@ -31,17 +31,17 @@ def train(x_train, y_train, x_test, y_test):
     print("Random Forest (trees=5): ", end="")
     run_model(x_train, y_train, x_test, y_test, RandomForestClassifier(n_estimators=5))
 
-    # print("Random Forest (trees=50): ", end="")
-    # run_model(x_train, y_train, x_test, y_test, RandomForestClassifier(n_estimators=50))
-    #
-    # print("Random Forest (trees=500): ", end="")
-    # run_model(x_train, y_train, x_test, y_test, RandomForestClassifier(n_estimators=500))
-    #
-    # print("LinearSVM (C=0.01): ", end="")
-    # run_model(x_train, y_train, x_test, y_test, LinearSVC(C=0.01))
-    #
-    # print("LinearSVM (C=0.1): ", end="")
-    # run_model(x_train, y_train, x_test, y_test, LinearSVC(C=0.1))
+    print("Random Forest (trees=50): ", end="")
+    run_model(x_train, y_train, x_test, y_test, RandomForestClassifier(n_estimators=50))
+
+    print("Random Forest (trees=500): ", end="")
+    run_model(x_train, y_train, x_test, y_test, RandomForestClassifier(n_estimators=500))
+
+    print("LinearSVM (C=0.01): ", end="")
+    run_model(x_train, y_train, x_test, y_test, LinearSVC(C=0.01))
+
+    print("LinearSVM (C=0.1): ", end="")
+    run_model(x_train, y_train, x_test, y_test, LinearSVC(C=0.1))
 
 
 def main():

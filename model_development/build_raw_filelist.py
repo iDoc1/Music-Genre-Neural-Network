@@ -1,10 +1,9 @@
 # Author: Ian Docherty
 # Description: This script finds each WAV file in the GTZAN_dataset directory and
-#              builds a file list the contains the absolute file path and the
+#              builds a file list that contains the absolute file path and the
 #              corresponding class (genre) separated by a space
 
 import os
-import shutil
 
 
 def build_filelist():

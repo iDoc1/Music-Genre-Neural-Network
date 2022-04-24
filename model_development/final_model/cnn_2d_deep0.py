@@ -1,7 +1,8 @@
 # Author: Ian Docherty
-# Description: This model defines a 2D convolutional neural network with 5 convolutional layers.
+# Description: This model defines a 2D convolutional neural network with 3 convolutional layers.
+#              This model is the final model that achieved the highest accuracy on the test data.
 #
-# Citation: The starting point for the architecture for this model was adapted from Chapter 15
+# Citation: The starting point for the architecture for this model was borrowed from Chapter 15
 #           of the following source. Since the CNN model in Chapter 15 performed relatively well
 #           with the ESC-10, a similar dataset, I made the assumption it might also perform well
 #           for the GTZAN dataset.
@@ -12,24 +13,24 @@
 import numpy as np
 from tensorflow import keras
 from keras.models import Sequential
-from keras.layers import Dense, Dropout, Flatten
+from keras.layers import Dense, Dropout, Flatten, BatchNormalization
 from keras.layers import Conv2D, MaxPooling2D
 
 
 BATCH_SIZE = 16
 NUM_CLASSES = 10
-EPOCHS = 16
+EPOCHS = 20
 IMAGE_ROWS = 100
 IMAGE_COLS = 160
 INPUT_SHAPE = (IMAGE_ROWS, IMAGE_COLS, 3)  # The 3 signifies color images
-KERNEL_SIZE = (5, 5)
+KERNEL_SIZE = (3, 3)
 
 
 def main():
-    x_train = np.load("./spectrogram_100x160_datasets/gtzan_spect_train_images.npy")
-    y_train = np.load("./spectrogram_100x160_datasets/gtzan_spect_train_labels.npy")
-    x_test = np.load("./spectrogram_100x160_datasets/gtzan_spect_test_images.npy")
-    y_test = np.load("./spectrogram_100x160_datasets/gtzan_spect_test_labels.npy")
+    x_train = np.load("../spectrogram_100x160_datasets/gtzan_spect_train_images.npy")
+    y_train = np.load("../spectrogram_100x160_datasets/gtzan_spect_train_labels.npy")
+    x_test = np.load("../spectrogram_100x160_datasets/gtzan_spect_test_images.npy")
+    y_test = np.load("../spectrogram_100x160_datasets/gtzan_spect_test_labels.npy")
 
     # Normalize image data to be in the range [0, 1]
     x_train = x_train.astype("float32") / 255
@@ -39,32 +40,25 @@ def main():
 
     # Build 2D CNN model
     model = Sequential()
-    model.add(Conv2D(32, kernel_size=KERNEL_SIZE, activation='relu', input_shape=INPUT_SHAPE))
+    model.add(Conv2D(32, kernel_size=KERNEL_SIZE, activation='relu', input_shape=INPUT_SHAPE,
+                     kernel_initializer='he_normal'))
 
-    model.add(Conv2D(64, KERNEL_SIZE, activation='relu'))
+    model.add(Conv2D(64, KERNEL_SIZE, activation='relu', kernel_initializer='he_normal'))
     model.add(MaxPooling2D(pool_size=(2, 2)))
     model.add(Dropout(0.25))
 
-    model.add(Conv2D(64, KERNEL_SIZE, activation='relu'))
-    model.add(MaxPooling2D(pool_size=(2, 2)))
-    model.add(Dropout(0.25))
-
-    model.add(Conv2D(64, KERNEL_SIZE, activation='relu'))
-    model.add(MaxPooling2D(pool_size=(2, 2)))
-    model.add(Dropout(0.25))
-
-    model.add(Conv2D(64, KERNEL_SIZE, activation='relu'))
+    model.add(Conv2D(64, KERNEL_SIZE, activation='relu', kernel_initializer='he_normal'))
     model.add(MaxPooling2D(pool_size=(2, 2)))
     model.add(Dropout(0.25))
 
     model.add(Flatten())
-    model.add(Dense(128, activation='relu'))
+    model.add(Dense(128, activation='relu', kernel_initializer='he_normal'))
     model.add(Dropout(0.5))
     model.add(Dense(NUM_CLASSES, activation='softmax'))
 
     # Compile, train, and print score for this model on test data
     model.compile(loss=keras.losses.categorical_crossentropy,
-                  optimizer=keras.optimizers.Adam(),
+                  optimizer=keras.optimizers.Adam(0.0005),
                   metrics=['accuracy'])
 
     # Train using first half of test data for validation
@@ -80,6 +74,7 @@ def main():
     score = model.evaluate(x_test[(test_data_num_samples // 2):], y_test[(test_data_num_samples // 2):],
                            verbose=0)
     print("Test data accuracy:", score[1])
+    model.save("gtzan_2d_cnn_deep0.h5")
 
 
 if __name__ == "__main__":

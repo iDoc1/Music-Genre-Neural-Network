@@ -1,7 +1,7 @@
 # Author: Ian Docherty
-# Description: The purpose of this program is to take a full dataset of feature
+# Description: The purpose of this script is to take a full dataset of feature
 #              vectors and corresponding labels, and produce a randomized,
-#              balanced dataset for training and testing
+#              balanced dataset for training and testing.
 
 import numpy as np
 

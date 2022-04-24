@@ -1,6 +1,6 @@
 # Author: Ian Docherty
 # Description: This model uses a convolutional neural network to train the raw
-#              split datasets on a deep network with 7 convolutional layers
+#              split datasets on a deep network with 9 convolutional layers
 
 import numpy as np
 from tensorflow import keras
@@ -19,10 +19,10 @@ KERNEL_SIZE = 11
 def main():
 
     # Get the raw numpy array datasets
-    x_train = np.load("raw_split_datasets/gtzan_raw_split_train_audio.npy")
-    y_train = np.load("raw_split_datasets/gtzan_raw_split_train_labels.npy")
-    x_test = np.load("raw_split_datasets/gtzan_raw_split_test_audio.npy")
-    y_test = np.load("raw_split_datasets/gtzan_raw_split_test_labels.npy")
+    x_train = np.load("../raw_split_datasets/gtzan_raw_split_train_audio.npy")
+    y_train = np.load("../raw_split_datasets/gtzan_raw_split_train_labels.npy")
+    x_test = np.load("../raw_split_datasets/gtzan_raw_split_test_audio.npy")
+    y_test = np.load("../raw_split_datasets/gtzan_raw_split_test_labels.npy")
 
     # Normalize feature vectors to the range [0, 1] and convert labels to categorical
     x_train = (x_train.astype('float32') + 32768) / 65536  # 32768 is max possible amplitude in dataset
@@ -33,6 +33,11 @@ def main():
     # Build the CNN model
     model = Sequential()
     model.add(Conv1D(32, kernel_size=KERNEL_SIZE, activation='relu', input_shape=INPUT_SHAPE))
+
+    model.add(Conv1D(64, kernel_size=KERNEL_SIZE, activation='relu'))
+    model.add(Conv1D(64, kernel_size=KERNEL_SIZE, activation='relu'))
+    model.add(MaxPooling1D(pool_size=3))
+    model.add(Dropout(0.25))
 
     model.add(Conv1D(64, kernel_size=KERNEL_SIZE, activation='relu'))
     model.add(Conv1D(64, kernel_size=KERNEL_SIZE, activation='relu'))

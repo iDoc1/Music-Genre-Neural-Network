@@ -1,5 +1,5 @@
 # Author: Ian Docherty
-# Description: This program takes the split audio files and produces an additional 3
+# Description: This script takes the split audio files and produces an additional 3
 #              augmented audio files by applying time shift, random noise, pitch shift,
 #              and time lengthening/compressing to the original audio at random.
 #
@@ -23,9 +23,9 @@ def augment_audio(file_list):
     for index, file in enumerate(file_list):
         print("Processing audio file #" + str(index) + "...")
 
+        # Get file name and path from file list
         wav_file_path, label = file.split(" ")
         wav_file_name = wav_file_path.split("/")[-1][:-4]  # Name without .wav extension
-
         wav = read(wav_file_path)
 
         # Write original sample
@@ -40,7 +40,7 @@ def augment_audio(file_list):
             write(aug_file_path, wav[0], aug_audio.astype(wav[1].dtype))
             aug_file_list.append(aug_file_path + " " + label)
 
-    # Save file list
+    # Save file list with file paths for each augmented sampe
     with open("gtzan_aug_split_filelist.txt", "w") as file:
         for file_path in aug_file_list:
             file.write(file_path + "\n")

@@ -1,7 +1,7 @@
 # Author: Ian Docherty
-# Description: This model defines a 2D convolutional neural network with 2 convolutional layers.
+# Description: This model defines a 2D convolutional neural network with 4 convolutional layers.
 #
-# Citation: The starting point for the architecture for this model was borrowed from Chapter 15
+# Citation: The starting point for the architecture for this model was adapted from Chapter 15
 #           of the following source. Since the CNN model in Chapter 15 performed relatively well
 #           with the ESC-10, a similar dataset, I made the assumption it might also perform well
 #           for the GTZAN dataset.
@@ -22,14 +22,14 @@ EPOCHS = 16
 IMAGE_ROWS = 100
 IMAGE_COLS = 160
 INPUT_SHAPE = (IMAGE_ROWS, IMAGE_COLS, 3)  # The 3 signifies color images
-KERNEL_SIZE = (3, 3)
+KERNEL_SIZE = (7, 7)
 
 
 def main():
-    x_train = np.load("./spectrogram_100x160_datasets/gtzan_spect_train_images.npy")
-    y_train = np.load("./spectrogram_100x160_datasets/gtzan_spect_train_labels.npy")
-    x_test = np.load("./spectrogram_100x160_datasets/gtzan_spect_test_images.npy")
-    y_test = np.load("./spectrogram_100x160_datasets/gtzan_spect_test_labels.npy")
+    x_train = np.load("../spectrogram_100x160_datasets/gtzan_spect_train_images.npy")
+    y_train = np.load("../spectrogram_100x160_datasets/gtzan_spect_train_labels.npy")
+    x_test = np.load("../spectrogram_100x160_datasets/gtzan_spect_test_images.npy")
+    y_test = np.load("../spectrogram_100x160_datasets/gtzan_spect_test_labels.npy")
 
     # Normalize image data to be in the range [0, 1]
     x_train = x_train.astype("float32") / 255
@@ -40,6 +40,14 @@ def main():
     # Build 2D CNN model
     model = Sequential()
     model.add(Conv2D(32, kernel_size=KERNEL_SIZE, activation='relu', input_shape=INPUT_SHAPE))
+
+    model.add(Conv2D(64, KERNEL_SIZE, activation='relu'))
+    model.add(MaxPooling2D(pool_size=(2, 2)))
+    model.add(Dropout(0.25))
+
+    model.add(Conv2D(64, KERNEL_SIZE, activation='relu'))
+    model.add(MaxPooling2D(pool_size=(2, 2)))
+    model.add(Dropout(0.25))
 
     model.add(Conv2D(64, KERNEL_SIZE, activation='relu'))
     model.add(MaxPooling2D(pool_size=(2, 2)))
