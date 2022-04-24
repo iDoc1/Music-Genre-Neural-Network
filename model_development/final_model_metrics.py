@@ -6,23 +6,20 @@
 import tensorflow as tf
 from keras.models import load_model
 import numpy as np
-import matplotlib.pyplot as plt
 from tabulate import tabulate
+from sklearn.metrics import classification_report
 
 NUM_CLASSES = 10
-
-
-def plot_value_array(i, predictions_array, true_label):
-    true_label = true_label[i]
-    plt.grid(False)
-    plt.xticks(range(10))
-    plt.yticks([])
-    thisplot = plt.bar(range(NUM_CLASSES), predictions_array, color="#777777")
-    plt.ylim([0, 1])
-    predicted_label = np.argmax(predictions_array)
-
-    thisplot[predicted_label].set_color('red')
-    thisplot[true_label].set_color('blue')
+LABELS = {1: "blues",
+          2: "classical",
+          3: "country",
+          4: "disco",
+          5: "hiphop",
+          6: "jazz",
+          7: "metal",
+          8: "pop",
+          9: "reggae",
+          0: "rock"}
 
 
 def print_confusion_matrix(labels, predictions):
@@ -33,12 +30,27 @@ def print_confusion_matrix(labels, predictions):
 
     headers = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
     table = tabulate(conf_matrix, headers, tablefmt="fancy_grid", showindex="always")
+    print("Confusion Matrix: (rows=actual labels, cols=predicted labels)")
     print(table)
+    print()
+
+
+def print_classification_report(test_labels, prediction_labels):
+    print("Classification Report:")
+    print(classification_report(y_true=test_labels, y_pred=prediction_labels))
+    print()
+
+
+def print_labels_and_classes():
+    print("Label        Class")
+    for label in LABELS:
+        print(" ", label, "\t\t", LABELS[label])
+    print()
 
 
 def main():
 
-    # Load mode and test data
+    # Load model and test data
     model = load_model("./final_model/gtzan_2d_cnn_deep0.h5")
     test_data = np.load("./spectrogram_100x160_datasets/gtzan_spect_test_images.npy")
     test_labels = np.load("./spectrogram_100x160_datasets/gtzan_spect_test_labels.npy").astype("uint8")
@@ -57,7 +69,9 @@ def main():
     test_data_predictions_labels = np.argmax(test_data_predictions, axis=1)
 
     # Show metrics
+    print_labels_and_classes()
     print_confusion_matrix(test_labels, test_data_predictions_labels)
+    print_classification_report(test_labels, test_data_predictions_labels)
 
 
 if __name__ == "__main__":

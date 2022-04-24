@@ -24,9 +24,10 @@
 
 ### Confusion Matrix
 
-### ROC Curve
+### F1 Score
 
 ## Next Steps
 
 ## Citations
 https://www.tensorflow.org/tutorials/keras/classification
+https://towardsdatascience.com/understanding-auc-roc-curve-68b2303cc9c5
