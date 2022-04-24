@@ -20,6 +20,13 @@
 
 ## Final Results
 
+### Test Set Accuracy
+
+### Confusion Matrix
+
+### ROC Curve
+
 ## Next Steps
 
 ## Citations
+https://www.tensorflow.org/tutorials/keras/classification
