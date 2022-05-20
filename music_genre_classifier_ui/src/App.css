@@ -28,6 +28,11 @@
   color: #61dafb;
 }
 
+.youtubeSearchBox {
+  margin-left: 15%;
+  margin-right: 15%;
+}
+
 .submitButton {
   margin-top: 10px;
 }

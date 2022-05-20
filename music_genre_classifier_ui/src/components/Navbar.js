@@ -9,7 +9,7 @@ function TopNavbar() {
         <>
             <Navbar bg="primary" variant="dark">
                 <Container>
-                <Navbar.Brand href="#home">Music Genre Classifier</Navbar.Brand>
+                <Navbar.Brand href="/">Music Genre Classifier</Navbar.Brand>
                 <Nav className="me-auto">
                 <Nav.Link href="/">Model Accuracy Tester</Nav.Link>
                 <Nav.Link href="/about">About this Project</Nav.Link>

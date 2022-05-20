@@ -9,10 +9,10 @@ function SearchBox() {
         <>
             <Form>
             <Form.Group className="youtubeSearchBox" controlId="formYoutubeSearch">
-                <Form.Label>Enter the name of song you would like to test</Form.Label>
+                <Form.Label>Enter the name of song to test</Form.Label>
                 <Form.Control type="text" placeholder="Enter song name" />
                 <Form.Text className="text-muted">
-                Press Submit to view a list of YouTube videos to test the model on
+                Press Submit to search for a song on YouTube to test to model on
                 </Form.Text>
             </Form.Group>
 
