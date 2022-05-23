@@ -1,5 +1,6 @@
 import React from 'react';
 import SearchBox from '../components/SearchBox';
+import Thumbnail from '../components/Thumbnail';
   
 function HomePage() {
   return (
@@ -7,6 +8,12 @@ function HomePage() {
         <h1>Model Accuracy Tester</h1>
         <br/>
         <SearchBox/>
+        <br/>
+        <div className='thumbnailContainer'>
+          <Thumbnail/>
+          <Thumbnail/>
+          <Thumbnail/>
+        </div>
     </>
   );
 };
