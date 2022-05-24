@@ -3,7 +3,7 @@ import { Form, Button } from 'react-bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
-function SearchBox() {
+function SearchBox({ onClickSubmit }) {
 
     return (
         <>
@@ -16,7 +16,7 @@ function SearchBox() {
                 </Form.Text>
             </Form.Group>
 
-            <Button className ="submitButton" variant="primary" type="submit">
+            <Button className ="submitButton" variant="primary" type="submit" onClick={() => onClickSubmit('american idiot')}>
                 Submit
             </Button>
             </Form>

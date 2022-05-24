@@ -1,14 +1,16 @@
 import React from 'react';
   
-function Thumbnail() {
+function Thumbnail({ songInfo }) {
   return (
     <> 
         <div className='imgContainer'>
             <img 
-            src='https://img.youtube.com/vi/a1BS7XnEZqc/0.jpg'
+            className='imgThumbnail'
+            src={songInfo.videoImgUrl}
             alt='new'
             />
-            <figcaption>Song name here</figcaption>
+            <figcaption>{songInfo.videoTitle}</figcaption>
+            <a className='videoLink' href={songInfo.videoUrl}>Video Link</a>
         </div>       
     </>
   );
