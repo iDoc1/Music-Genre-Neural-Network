@@ -5,46 +5,52 @@
 import os
 from dotenv import load_dotenv
 from googleapiclient.discovery import build
+import html
 
 
-class YouTubeClient:
+class YouTubeSearch:
     """
-    This class represents a client that can search for YouTube videos
+    This class represents a search performed on teh YouTube API
     """
 
-    def __init__(self):
+    def __init__(self, search_string, max_results):
+
+        # Get API key
         load_dotenv()
         api_key = os.getenv('YOUTUBE_API_KEY')
-        self._youtube_service = build('youtube', 'v3', developerKey=api_key)
 
-    def search(self, search_string, max_results):
-        """
-        Given a search string, submits a GET request to the YouTube API using this string 
-        as the search parameter, then returns the specified number of results as a list of
-        video IDs
-        :param search_string: the string to submit a search request for
-        :param max_results: the max number of URLs to return
-        :return: A list of URLs of the top 3 results
-        """
-
-        # Create and execute request
-        request = self._youtube_service.search().list(
+        # Create and execute search request, and store result
+        request = build('youtube', 'v3', developerKey=api_key).search().list(
             part="snippet",
             maxResults=max_results,
             type="videos",
             q=search_string
         )
-        response = request.execute()
+        self._response = request.execute()
 
-        # Create URLs and store in a list
+    def get_video_ids(self):
+        """
+        Returns a list of video IDs stored in this YouTubeSearch object
+        """
         video_id_list = []
-        for video in response['items']:
+        for video in self._response['items']:
             video_id_list.append(video['id']['videoId'])
 
         return video_id_list
 
+    def get_video_titles(self):
+        """
+        Returns a list of video titles stored in this YouTubeSearch object
+        """
+        video_title_list = []
+        for video in self._response['items']:
+            video_title_list.append(html.unescape(video['snippet']['title']))  # Unescape HTML chars like '&'
+
+        return video_title_list
+
 
 # Test code to print search results for a specified query
 if __name__ == "__main__":
-    api = YouTubeClient()
-    print(api.search("tim mcgraw", 3))
+    search = YouTubeSearch("sound of silence", 3)
+    print(search.get_video_ids())
+    print(search.get_video_titles())
