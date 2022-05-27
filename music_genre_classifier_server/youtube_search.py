@@ -23,7 +23,7 @@ class YouTubeSearch:
         request = build('youtube', 'v3', developerKey=api_key).search().list(
             part="snippet",
             maxResults=max_results,
-            type="videos",
+            type="video",
             q=search_string
         )
         self._response = request.execute()
@@ -51,6 +51,6 @@ class YouTubeSearch:
 
 # Test code to print search results for a specified query
 if __name__ == "__main__":
-    search = YouTubeSearch("sound of silence", 3)
+    search = YouTubeSearch("green day", 3)
     print(search.get_video_ids())
     print(search.get_video_titles())

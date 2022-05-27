@@ -1,9 +1,11 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, request, jsonify
 import os
 from youtube_search import YouTubeSearch
+from flask_cors import CORS
 
 # Configuration
 app = Flask(__name__)
+CORS(app)
 
 
 # Routes
@@ -19,6 +21,8 @@ def get_youtube_results():
 
     youtube_search = YouTubeSearch(request.args.get("songName"), 3)
     video_id_list = youtube_search.get_video_ids()
+
+    # If no search result was returned then return empty list
 
     # Build video URL and thumbnail URL list
     url_list = []
@@ -36,6 +40,14 @@ def get_youtube_results():
     # Build dict to return
     results = {"video_urls": url_list, "thumbnail_urls": thumbnail_list, "video_titles": title_list}
     return jsonify(results)
+
+
+@app.route('/test', methods=['GET'])
+def get_test():
+    return {'Name': "geek",
+            "Age": "22",
+            "Date": "today",
+            "programming": "python"}
 
 
 # Listener
