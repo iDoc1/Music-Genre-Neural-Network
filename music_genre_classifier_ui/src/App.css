@@ -46,10 +46,15 @@
 .imgContainer {
   margin: 15px;
   color: white;
-  font-size: 1.25em;
+  font-size: 1.25em;  
   background-color: rgb(13, 110, 253);
   border-radius: 10px;
+  width: 480px;
 }
+
+.imgContainer:hover {
+    background-color: rgb(18, 150, 18);
+  }
 
 .imgThumbnail {
   border-top-left-radius: 10px;

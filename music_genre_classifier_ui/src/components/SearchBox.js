@@ -4,7 +4,7 @@ import { Form, Button } from 'react-bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
-function SearchBox({ fetchSearchData }) {
+function SearchBox({ fetchSearchData, setInfoTextCount }) {
     const [songInput, setSongInput] = useState('');
 
     // Prevents default POST request then executes function to show thumbnails

@@ -2,9 +2,11 @@ import React from 'react';
 import { useState } from 'react';
 import SearchBox from '../components/SearchBox';
 import Thumbnail from '../components/Thumbnail';
+import InfoText from '../components/InfoText';
   
 function HomePage() {
     const [songObjArr, setSongObjArr] = useState([]);
+    const [infoTextCount, setInfoTextCount] = useState(0);
 
   // Call Flask server to get YouTube search data given the queryString submitted by user
     const fetchSearchData = async (queryString) => {        
@@ -29,6 +31,9 @@ function HomePage() {
                     songObj['videoTitle'] = data['video_titles'][i];
                     setSongObjArr(songObjArr => [...songObjArr, songObj]);
                 }
+
+                // Add informative text
+                setInfoTextCount(1);
             }
         }       
     }
@@ -42,9 +47,11 @@ function HomePage() {
             <div className='thumbnailContainer'>                
                 {songObjArr.map((songObj, i) => <Thumbnail
                     songInfo={songObj}
-                    key={i}/>)}
-                
+                    setInfoTextCount={setInfoTextCount}
+                    key={i}/>)}                
             </div>
+            {[...Array(infoTextCount)].map((_, i) => <InfoText
+                    key={i}/>)}
         </>
     );
 };
