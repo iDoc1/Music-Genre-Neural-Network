@@ -9,7 +9,7 @@ CORS(app)
 
 
 # Routes
-@app.route('/getYouTubeResults', methods=['GET'])
+@app.route('/youtube-search-results', methods=['GET'])
 def get_youtube_results():
     """
     Responds with a list of YouTube video URLs and thumbnail image URLs
@@ -21,8 +21,6 @@ def get_youtube_results():
 
     youtube_search = YouTubeSearch(request.args.get("songName"), 3)
     video_id_list = youtube_search.get_video_ids()
-
-    # If no search result was returned then return empty list
 
     # Build video URL and thumbnail URL list
     url_list = []
@@ -40,14 +38,6 @@ def get_youtube_results():
     # Build dict to return
     results = {"video_urls": url_list, "thumbnail_urls": thumbnail_list, "video_titles": title_list}
     return jsonify(results)
-
-
-@app.route('/test', methods=['GET'])
-def get_test():
-    return {'Name': "geek",
-            "Age": "22",
-            "Date": "today",
-            "programming": "python"}
 
 
 # Listener

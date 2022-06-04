@@ -4,13 +4,13 @@ import SearchBox from '../components/SearchBox';
 import Thumbnail from '../components/Thumbnail';
 import InfoText from '../components/InfoText';
   
-function HomePage() {
+function HomePage({ setVideoUrl }) {
     const [songObjArr, setSongObjArr] = useState([]);
     const [infoTextCount, setInfoTextCount] = useState(0);
 
-  // Call Flask server to get YouTube search data given the queryString submitted by user
+  // Call server to get YouTube search data given the queryString submitted by user
     const fetchSearchData = async (queryString) => {        
-        const baseUrl = 'http://127.0.0.1:8050/getYouTubeResults';
+        const baseUrl = 'http://127.0.0.1:8050/youtube-search-results';
         const response = await fetch(baseUrl + `?songName=${encodeURIComponent(queryString)}`);
         const data = await response.json();
 
@@ -47,6 +47,7 @@ function HomePage() {
             <div className='thumbnailContainer'>                
                 {songObjArr.map((songObj, i) => <Thumbnail
                     songInfo={songObj}
+                    setVideoUrl={setVideoUrl}
                     setInfoTextCount={setInfoTextCount}
                     key={i}/>)}                
             </div>
