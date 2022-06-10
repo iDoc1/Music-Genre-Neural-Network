@@ -24,3 +24,5 @@ yarn-error.log*
 __pycache__/
 .idea/
 .vscode/
+*.mp3
+*.wav
