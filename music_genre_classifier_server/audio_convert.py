@@ -4,31 +4,38 @@ import os
 
 class AudioConverter:
     """
-    This class represents an audio converter that takes a given audio
-    file and can apply various conversions operations to that file
+    This class represents an audio converter that takes a given MP3 audio
+    file and can convert that file to a wav file
     """
 
-    def __init__(self, filepath):
-        self._filepath = filepath
+    def __init__(self, file_name):
+        self._file_path = file_name
 
     def convert_mp3_to_wav(self):
         """
-        Use ffmpeg to convert the file at filepath to a wav file
+        Use a ffmpeg subprocess to convert the given MP3 file to a wav file
+        and save in the current directory
         """
-        subprocess.call(['ffmpeg', '-i', self._filepath,
-                         'converted_to_wav_file.wav'])
+
+        # Check that the file is an MP3 file
+        if self.get_filetype() == "mp3":
+            subprocess.call(['ffmpeg', '-i', self._file_path,
+                             'converted_to_wav_file.wav'])
+        else:
+            raise ValueError("File type not MP3")
 
     def get_filetype(self):
         """
         Returns the file extension of this object's associated audio file
         """
-        base, ext = self._filepath.split(".")
+        base, ext = self._file_path.split(".")
         return ext
 
-    def get_filepath(self):
-        return self._filepath
+    def get_file_name(self):
+        return self._file_path
 
 
+# Test code
 if __name__ == "__main__":
-    convert = AudioConverter("C:/Users/docma/Documents/Music-Genre-Neural-Network/music_genre_classifier_server/ACDC - Back In Black (Official Video).mp3")
+    convert = AudioConverter("ACDC - Back In Black (Official Video).mp3")
     convert.convert_mp3_to_wav()

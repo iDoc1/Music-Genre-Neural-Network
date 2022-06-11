@@ -12,7 +12,7 @@ CORS(app)
 @app.route('/youtube-search-results', methods=['GET'])
 def get_youtube_results():
     """
-    Responds with a list of YouTube video URLs and thumbnail image URLs
+    Responds with a JSON string of YouTube video URLs and thumbnail image URLs
     """
 
     # If the given song name is empty then return an empty list
@@ -38,6 +38,16 @@ def get_youtube_results():
     # Build dict to return
     results = {"video_urls": url_list, "thumbnail_urls": thumbnail_list, "video_titles": title_list}
     return jsonify(results)
+
+
+@app.route('/model-results', methods=['GET'])
+def get_model_results():
+    """
+    Request should contain a URL to a YouTube video. Audio will be extracted and
+    run through the neural network model, then a JSON string of the resulting
+    probabilities for each class/genre of music will be sent in the response.
+    """
+    pass
 
 
 # Listener

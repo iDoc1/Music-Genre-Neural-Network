@@ -43,6 +43,13 @@ class YouTubeAudio:
             os.remove(self._audio_filepath)
             self._audio_filepath = None
 
+    def get_file_name(self):
+        """
+        Extracts the file name from the filepath and returns it
+        """
+        if self._audio_filepath is not None:
+            return self._audio_filepath.split("\\")[-1]
+
     def get_youtube_obj(self):
         """
         Returns the YouTube object
@@ -63,4 +70,5 @@ if __name__ == "__main__":
     yt = YouTubeAudio("https://www.youtube.com/watch?v=pAgnJDJN4VA&ab_channel=acdcVEVO")
     yt.download_and_save_audio_file()
     print(yt.get_filepath())
+    print(yt.get_file_name())
     # yt.delete_audio_file()
