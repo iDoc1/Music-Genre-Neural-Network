@@ -9,7 +9,8 @@ class AudioConverter:
     """
 
     def __init__(self, file_name):
-        self._file_path = file_name
+        self._file_name = file_name
+        self._wav_saved = False
 
     def convert_mp3_to_wav(self):
         """
@@ -19,8 +20,13 @@ class AudioConverter:
 
         # Check that the file is an MP3 file
         if self.get_filetype() == "mp3":
-            subprocess.call(['ffmpeg', '-i', self._file_path,
-                             'converted_to_wav_file.wav'])
+            base = self._get_base_name()
+
+            # Only perform subprocess if file not already saved
+            if not self._wav_saved:
+                subprocess.call(['ffmpeg', '-i', self._file_name,
+                                 base + '.wav'])
+                self._wav_saved = True
         else:
             raise ValueError("File type not MP3")
 
@@ -28,14 +34,42 @@ class AudioConverter:
         """
         Returns the file extension of this object's associated audio file
         """
-        base, ext = self._file_path.split(".")
+        return self._get_ext_name()
+
+    def _get_base_name(self):
+        """
+        Returns base name of file without extension
+        """
+        base, ext = self._file_name.split(".")
+        return base
+
+    def _get_ext_name(self):
+        """
+        Returns extension of file name without base
+        """
+        base, ext = self._file_name.split(".")
         return ext
 
+    def delete_wav_file(self):
+        """
+        Deletes saved wav file associated with this object
+        """
+        if self._wav_saved:
+            wav_name = self._get_base_name() + ".wav"
+            try:
+                os.remove(wav_name)
+            except FileNotFoundError:
+                return
+            else:
+                self._wav_saved = False
+
     def get_file_name(self):
-        return self._file_path
+        return self._file_name
 
 
 # Test code
 if __name__ == "__main__":
     convert = AudioConverter("ACDC - Back In Black (Official Video).mp3")
+    print(convert.get_filetype())
     convert.convert_mp3_to_wav()
+    convert.delete_wav_file()
