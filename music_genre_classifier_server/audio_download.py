@@ -3,7 +3,7 @@ import pathlib
 import os
 
 
-class YouTubeAudio:
+class YouTubeAudioMp3:
     """
     This class represents an audio file that has been downloaded from
     a given YouTube URL
@@ -67,7 +67,7 @@ class YouTubeAudio:
 
 # Test code to download a video
 if __name__ == "__main__":
-    yt = YouTubeAudio("https://www.youtube.com/watch?v=pAgnJDJN4VA&ab_channel=acdcVEVO")
+    yt = YouTubeAudioMp3("https://www.youtube.com/watch?v=pAgnJDJN4VA&ab_channel=acdcVEVO")
     yt.download_and_save_audio_file()
     print(yt.get_filepath())
     print(yt.get_file_name())

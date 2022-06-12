@@ -2,7 +2,7 @@ import subprocess
 import os
 
 
-class AudioConverter:
+class ConvertedAudioWav:
     """
     This class represents an audio converter that takes a given MP3 audio
     file and can convert that file to a wav file
@@ -63,13 +63,20 @@ class AudioConverter:
             else:
                 self._wav_saved = False
 
+    def get_wav_file_name(self):
+        """
+        Returns the name of the converted wav file
+        """
+        if self._wav_saved:
+            return self._get_base_name() + ".wav"
+
     def get_file_name(self):
         return self._file_name
 
 
 # Test code
 if __name__ == "__main__":
-    convert = AudioConverter("ACDC - Back In Black (Official Video).mp3")
+    convert = ConvertedAudioWav("ACDC - Back In Black (Official Video).mp3")
     print(convert.get_filetype())
     convert.convert_mp3_to_wav()
     convert.delete_wav_file()
