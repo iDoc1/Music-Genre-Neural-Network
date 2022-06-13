@@ -1,15 +1,18 @@
 import tensorflow as tf
-from keras.models import load_model
 import numpy as np
+import os
+from keras.models import load_model
 from audio_download import YouTubeAudioMp3
 from audio_convert import ConvertedAudioWav
 from scipy.io.wavfile import read, write
+from PIL import Image
 
 
 SAMPLING_RATE_MODEL = 22050  # The Hz value that the model was trained with
 AUDIO_LENGTH_MODEL = 3 * SAMPLING_RATE_MODEL  # 3 seconds long audio
-SAMPLE_WIDTH_MODEL = 50  # Keep every 50th data point
 MIN_AUDIO_LENGTH = 10  # Audio must be at least 9 seconds long
+IMAGE_ROWS = 100  # Spectrogram image rows
+IMAGE_COLS = 160  # Spectrogram image columns
 
 
 class MusicGenreClassifier:
@@ -53,7 +56,10 @@ class MusicGenreClassifier:
 
         # Process wav file and create spectrogram
         middle_sample = self._preprocess_audio(samp_rate, wav_data)
+        spectrogram_arr = self._create_spectrogram(middle_sample)
 
+        # Run spectrogram image array through model to get resulting probabilities
+        self._get_model_predictions(spectrogram_arr)
 
         converted_audio_wav.delete_wav_file()
 
@@ -89,16 +95,51 @@ class MusicGenreClassifier:
         samp_rate_ratio = samp_rate // SAMPLING_RATE_MODEL
         wav_data = wav_data[0::samp_rate_ratio]
 
-        # Save 3 second sample from middle of wav file in increments of 50
+        # Save 3 second sample from middle of wav file
         wav_data_middle_index = wav_data.shape[0] // 2
         sample_start_idx = int(wav_data_middle_index - (SAMPLING_RATE_MODEL * 1.5))
-        middle_sample = np.zeros((AUDIO_LENGTH_MODEL // SAMPLE_WIDTH_MODEL, 1), dtype="int16")
-        middle_sample[:, 0] = wav_data[sample_start_idx:sample_start_idx + AUDIO_LENGTH_MODEL:SAMPLE_WIDTH_MODEL]
+        middle_sample = np.zeros((AUDIO_LENGTH_MODEL, 1), dtype="int16")
+        middle_sample[:, 0] = wav_data[sample_start_idx:sample_start_idx + AUDIO_LENGTH_MODEL]
 
         return middle_sample
 
-    def get_model(self):
-        return self._model
+    def _create_spectrogram(self, data_sample):
+        """
+        Takes a numpy array of a 3-second wav audio sample, then uses SOX to build a
+        spectrogram image. Returns a numpy array of the spectrogram image.
+        """
+        source_file = "./wav_sample_3_second.wav"
+        write(source_file, SAMPLING_RATE_MODEL, data_sample)
+
+        # Create spectrogram from wav file and save in memory
+        os.system("sox %s -n spectrogram" % source_file)
+        image_arr = np.array(Image.open("spectrogram.png").convert('RGB'))
+        os.remove(source_file)
+        os.remove("spectrogram.png")
+
+        # Extract the spectrogram image by eliminating the borders and info section
+        image_arr = image_arr[42:542, 58:858, :]
+
+        # Resize image to expected model size then return image data array
+        image_arr = Image.fromarray(image_arr).resize((IMAGE_COLS, IMAGE_ROWS))
+        image_data = np.zeros((1, IMAGE_ROWS, IMAGE_COLS, 3), dtype='uint8')
+        image_data[0, :, :, :] = np.array(image_arr)
+        return image_data
+
+    def _get_model_predictions(self, spectrogram_arr):
+        """
+        Runs the given spectrogram numpy image array through the model then returns
+        the resulting per-class probabilities
+        """
+
+        # Normalize the image array values in preparation for Tensorflow input
+        spectrogram_arr = spectrogram_arr.astype("float32") / 255
+
+        # Run image array through the model
+        predictions = self._model.predict(spectrogram_arr)
+        print(predictions)
+        test_data_predictions_labels = np.argmax(predictions, axis=1)
+        print(test_data_predictions_labels)
 
 
 class SamplingRateTooLowError(Exception):
@@ -119,5 +160,6 @@ class AudioLengthTooLowError(Exception):
 
 if __name__ == "__main__":
     classifier = MusicGenreClassifier()
-    classifier.classify_youtube_audio("https://www.youtube.com/watch?v=pAgnJDJN4VA&ab_channel=acdcVEVO")
+    # classifier.classify_youtube_audio("https://www.youtube.com/watch?v=pAgnJDJN4VA&ab_channel=acdcVEVO")
     # classifier.classify_youtube_audio("https://www.youtube.com/watch?v=u9Dg-g7t2l4&ab_channel=Disturbed")
+    classifier.classify_youtube_audio("https://www.youtube.com/watch?v=BSzSn-PRdtI&ab_channel=Maroon5VEVO")  # Maroon5
