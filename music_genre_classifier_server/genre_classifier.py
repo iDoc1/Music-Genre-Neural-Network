@@ -140,6 +140,7 @@ class MusicGenreClassifier:
         print(predictions)
         test_data_predictions_labels = np.argmax(predictions, axis=1)
         print(test_data_predictions_labels)
+        # TODO: Only download videos less than 20 minutes in length
 
 
 class SamplingRateTooLowError(Exception):
