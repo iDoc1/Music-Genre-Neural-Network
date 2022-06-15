@@ -58,8 +58,8 @@ class ConvertedAudioWav:
             wav_name = self._get_base_name() + ".wav"
             try:
                 os.remove(wav_name)
-            except FileNotFoundError:
-                return
+            except OSError:
+                pass
             else:
                 self._wav_saved = False
 
@@ -79,4 +79,4 @@ if __name__ == "__main__":
     convert = ConvertedAudioWav("ACDC - Back In Black (Official Video).mp3")
     print(convert.get_filetype())
     convert.convert_mp3_to_wav()
-    convert.delete_wav_file()
+    # convert.delete_wav_file()

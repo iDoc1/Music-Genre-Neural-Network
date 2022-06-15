@@ -1,5 +1,4 @@
 from pytube import YouTube
-import pathlib
 import os
 
 
@@ -22,18 +21,18 @@ class YouTubeAudioMp3:
         video = self._youtube_obj.streams.filter(only_audio=True).first()
         output_file = video.download()
 
-        # Rename as given filename in MP3 format
+        # Create MP3 file name
         base, ext = os.path.splitext(output_file)
         new_file = base + ".mp3"
-        self._audio_filepath = new_file
 
-        # Remove file if it already exists
+        # Remove file if it already exists, then rename
         try:
             os.remove(new_file)
-        except FileNotFoundError:
-            os.rename(output_file, new_file)
-        else:
-            os.rename(output_file, new_file)
+        except OSError:
+            pass
+
+        os.rename(output_file, new_file)
+        self._audio_filepath = new_file
 
     def delete_audio_file(self):
         """
@@ -71,4 +70,4 @@ if __name__ == "__main__":
     yt.download_and_save_audio_file()
     print(yt.get_filepath())
     print(yt.get_file_name())
-    # yt.delete_audio_file()
+    yt.delete_audio_file()
