@@ -10,7 +10,7 @@ function HomePage({ setVideoUrl }) {
 
   // Call server to get YouTube search data given the queryString submitted by user
     const fetchSearchData = async (queryString) => {        
-        const baseUrl = 'http://127.0.0.1:8050/youtube-search-results';
+        const baseUrl = 'http://127.0.0.1:5000/youtube-search-results';
         const response = await fetch(baseUrl + `?songName=${encodeURIComponent(queryString)}`);
         const data = await response.json();
 

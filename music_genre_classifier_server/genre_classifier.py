@@ -10,7 +10,7 @@ from PIL import Image
 
 SAMPLING_RATE_MODEL = 22050  # The Hz value that the model was trained with
 AUDIO_LENGTH_MODEL = 3 * SAMPLING_RATE_MODEL  # 3 seconds long audio
-MIN_AUDIO_LENGTH = 10  # Audio must be at least 9 seconds long
+MIN_AUDIO_LENGTH = 60  # Min accepted audio length in seconds
 IMAGE_ROWS = 100  # Spectrogram image rows
 IMAGE_COLS = 160  # Spectrogram image columns
 
@@ -55,11 +55,11 @@ class MusicGenreClassifier:
             raise AudioLengthTooLowError("Audio length must be at least " + str(MIN_AUDIO_LENGTH) + " seconds")
 
         # Process wav file and create spectrogram
-        middle_sample = self._preprocess_audio(samp_rate, wav_data)
-        spectrogram_arr = self._create_spectrogram(middle_sample)
+        wav_sample_files = self._preprocess_audio(samp_rate, wav_data)
+        spectrogram_images_arr = self._create_spectrogram(wav_sample_files)
 
         # Run spectrogram image array through model to get resulting probabilities
-        self._get_model_predictions(spectrogram_arr)
+        self._get_model_predictions(spectrogram_images_arr)
 
         converted_audio_wav.delete_wav_file()
 
@@ -88,7 +88,7 @@ class MusicGenreClassifier:
         for input into the model. Returns a reference to the resulting numpy array.
         """
 
-        # Only keep 1st channel of audio
+        # Only keep one channel of audio
         wav_data = wav_data[:, 1]
 
         # Convert audio to sampling rate needed by the model
@@ -96,57 +96,71 @@ class MusicGenreClassifier:
         wav_data = wav_data[0::samp_rate_ratio]
 
         # Save 3 second sample from middle of wav file
-        wav_data_middle_index = wav_data.shape[0] // 2
-        sample_start_idx = int(wav_data_middle_index - (SAMPLING_RATE_MODEL * 1.5))
+        mid_sample_start_idx = int((wav_data.shape[0] // 2) - (SAMPLING_RATE_MODEL * 1.5))
         middle_sample = np.zeros((AUDIO_LENGTH_MODEL, 1), dtype="int16")
-        middle_sample[:, 0] = wav_data[sample_start_idx:sample_start_idx + AUDIO_LENGTH_MODEL]
+        middle_sample[:, 0] = wav_data[mid_sample_start_idx:mid_sample_start_idx + AUDIO_LENGTH_MODEL]
+        middle_wav_file = "./middle_sample.wav"
+        write(middle_wav_file, SAMPLING_RATE_MODEL, middle_sample)
 
-        return middle_sample
+        # Save 3 second sample from beginning of wav file
+        begin_sample_start_idx = int(SAMPLING_RATE_MODEL * 10)  # 10 seconds from start of wav file
+        begin_sample = np.zeros((AUDIO_LENGTH_MODEL, 1), dtype="int16")
+        begin_sample[:, 0] = wav_data[begin_sample_start_idx:begin_sample_start_idx + AUDIO_LENGTH_MODEL]
+        begin_wav_file = "./start_sample.wav"
+        write(begin_wav_file, SAMPLING_RATE_MODEL, begin_sample)
 
-    def _create_spectrogram(self, data_sample):
+        # Save 3 second sample from end of wav file
+        end_sample_start_idx = int(wav_data.shape[0] - (SAMPLING_RATE_MODEL * 10))  # 10 seconds from end of wav file
+        end_sample = np.zeros((AUDIO_LENGTH_MODEL, 1), dtype="int16")
+        end_sample[:, 0] = wav_data[end_sample_start_idx:end_sample_start_idx + AUDIO_LENGTH_MODEL]
+        end_wav_file = "./end_sample.wav"
+        write(end_wav_file, SAMPLING_RATE_MODEL, end_sample)
+
+        return begin_wav_file, middle_wav_file, end_wav_file
+
+    def _create_spectrogram(self, wav_sample_files):
         """
         Takes a numpy array of a 3-second wav audio sample, then uses SOX to build a
         spectrogram image. Returns a numpy array of the spectrogram image.
         """
-        source_file = "./wav_sample_3_second.wav"
-        write(source_file, SAMPLING_RATE_MODEL, data_sample)
+        image_data = np.zeros((len(wav_sample_files), IMAGE_ROWS, IMAGE_COLS, 3), dtype='uint8')
 
-        # Create spectrogram from wav file and save in memory
-        os.system("sox %s -n spectrogram" % source_file)
-        image_arr = np.array(Image.open("spectrogram.png").convert('RGB'))
-        os.remove(source_file)
-        os.remove("spectrogram.png")
+        for index, source_file in enumerate(wav_sample_files):
 
-        # Extract the spectrogram image by eliminating the borders and info section
-        image_arr = image_arr[42:542, 58:858, :]
+            # Create spectrogram from wav file and save in memory
+            os.system("sox %s -n spectrogram" % source_file)
+            image_arr = np.array(Image.open("spectrogram.png").convert('RGB'))
+            os.remove(source_file)
+            os.remove("spectrogram.png")
 
-        # Resize image to expected model size then return image data array
-        image_arr = Image.fromarray(image_arr).resize((IMAGE_COLS, IMAGE_ROWS))
-        image_data = np.zeros((1, IMAGE_ROWS, IMAGE_COLS, 3), dtype='uint8')
-        image_data[0, :, :, :] = np.array(image_arr)
+            # Extract the spectrogram image by eliminating the borders and info section
+            image_arr = image_arr[42:542, 58:858, :]
+
+            # Resize image to expected model size then return image data array
+            image_arr = Image.fromarray(image_arr).resize((IMAGE_COLS, IMAGE_ROWS))
+            # image_data = np.zeros((1, IMAGE_ROWS, IMAGE_COLS, 3), dtype='uint8')
+            image_data[index, :, :, :] = np.array(image_arr)
+
         return image_data
 
     def _get_model_predictions(self, spectrogram_arr):
         """
         Runs the given spectrogram numpy image array through the model then returns
-        the resulting per-class probabilities
+        the resulting per-class probabilities as a list of lists
         """
 
-        # Normalize the image array values in preparation for Tensorflow input
+        # Normalize the image array values to range [0, 1] for Tensorflow input
         spectrogram_arr = spectrogram_arr.astype("float32") / 255
 
         # Run image array through the model
-        predictions = self._model.predict(spectrogram_arr)
-        print(predictions)
-        test_data_predictions_labels = np.argmax(predictions, axis=1)
-        print(test_data_predictions_labels)
-        # TODO: Only download videos less than 20 minutes in length
+        predictions = self._model.predict(spectrogram_arr, verbose=0)
+        return predictions.tolist()
 
 
 class SamplingRateTooLowError(Exception):
     """
     This error is to be raised when the passed audio wav file has a sampling
-    rate less than desired
+    rate less than needed by the model
     """
     pass
 
@@ -161,6 +175,6 @@ class AudioLengthTooLowError(Exception):
 
 if __name__ == "__main__":
     classifier = MusicGenreClassifier()
-    # classifier.classify_youtube_audio("https://www.youtube.com/watch?v=pAgnJDJN4VA&ab_channel=acdcVEVO")
+    classifier.classify_youtube_audio("https://www.youtube.com/watch?v=pAgnJDJN4VA&ab_channel=acdcVEVO")
     # classifier.classify_youtube_audio("https://www.youtube.com/watch?v=u9Dg-g7t2l4&ab_channel=Disturbed")
-    classifier.classify_youtube_audio("https://www.youtube.com/watch?v=BSzSn-PRdtI&ab_channel=Maroon5VEVO")  # Maroon5
+    # classifier.classify_youtube_audio("https://www.youtube.com/watch?v=BSzSn-PRdtI&ab_channel=Maroon5VEVO")  # Maroon5

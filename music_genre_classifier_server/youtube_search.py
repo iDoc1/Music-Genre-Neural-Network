@@ -24,6 +24,7 @@ class YouTubeSearch:
             part="snippet",
             maxResults=max_results,
             type="video",
+            videoDuration="medium",
             q=search_string
         )
         self._response = request.execute()

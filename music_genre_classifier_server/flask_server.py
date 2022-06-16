@@ -41,7 +41,7 @@ def get_youtube_results():
 
 
 @app.route('/model-results', methods=['GET'])
-def get_model_results():
+def model_results():
     """
     Request should contain a URL to a YouTube video. Audio will be extracted and
     run through the neural network model, then a JSON string of the resulting
