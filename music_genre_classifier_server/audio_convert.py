@@ -24,7 +24,7 @@ class ConvertedAudioWav:
 
             # Only perform subprocess if file not already saved -hide_banner -loglevel error
             if not self._wav_saved:
-                subprocess.call(['ffmpeg', '-loglevel', 'error', '-i', self._file_name,
+                subprocess.call(['ffmpeg', '-loglevel', 'error', '-i', self._file_name, '-y',
                                  base + '.wav'])
                 self._wav_saved = True
         else:

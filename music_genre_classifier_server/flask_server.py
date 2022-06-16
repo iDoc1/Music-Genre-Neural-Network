@@ -1,11 +1,13 @@
 from flask import Flask, request, jsonify
 import os
 from youtube_search import YouTubeSearch
+from genre_classifier import MusicGenreClassifier
 from flask_cors import CORS
 
 # Configuration
 app = Flask(__name__)
 CORS(app)
+classifier = MusicGenreClassifier()
 
 
 # Routes
@@ -44,10 +46,12 @@ def get_youtube_results():
 def model_results():
     """
     Request should contain a URL to a YouTube video. Audio will be extracted and
-    run through the neural network model, then a JSON string of the resulting
+    run through the neural network model, then a JSON array of the resulting
     probabilities for each class/genre of music will be sent in the response.
     """
-    pass
+    query_param = request.args.get("songUrl")
+    results = classifier.classify_youtube_audio(query_param)
+    return jsonify(results)
 
 
 # Listener

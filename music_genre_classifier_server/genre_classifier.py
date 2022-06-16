@@ -59,9 +59,11 @@ class MusicGenreClassifier:
         spectrogram_images_arr = self._create_spectrogram(wav_sample_files)
 
         # Run spectrogram image array through model to get resulting probabilities
-        self._get_model_predictions(spectrogram_images_arr)
+        results = self._get_model_predictions(spectrogram_images_arr)
 
+        # Delete wav file and return results as a list
         converted_audio_wav.delete_wav_file()
+        return results.tolist()
 
     def _save_youtube_wav_audio(self, youtube_url):
         """
@@ -146,7 +148,7 @@ class MusicGenreClassifier:
     def _get_model_predictions(self, spectrogram_arr):
         """
         Runs the given spectrogram numpy image array through the model then returns
-        the resulting per-class probabilities as a list of lists
+        the resulting per-class probabilities as a numpy array
         """
 
         # Normalize the image array values to range [0, 1] for Tensorflow input
@@ -154,7 +156,7 @@ class MusicGenreClassifier:
 
         # Run image array through the model
         predictions = self._model.predict(spectrogram_arr, verbose=0)
-        return predictions.tolist()
+        return predictions
 
 
 class SamplingRateTooLowError(Exception):
@@ -175,6 +177,6 @@ class AudioLengthTooLowError(Exception):
 
 if __name__ == "__main__":
     classifier = MusicGenreClassifier()
-    classifier.classify_youtube_audio("https://www.youtube.com/watch?v=pAgnJDJN4VA&ab_channel=acdcVEVO")
+    # classifier.classify_youtube_audio("https://www.youtube.com/watch?v=pAgnJDJN4VA&ab_channel=acdcVEVO")
     # classifier.classify_youtube_audio("https://www.youtube.com/watch?v=u9Dg-g7t2l4&ab_channel=Disturbed")
-    # classifier.classify_youtube_audio("https://www.youtube.com/watch?v=BSzSn-PRdtI&ab_channel=Maroon5VEVO")  # Maroon5
+    print(classifier.classify_youtube_audio("https://www.youtube.com/watch?v=BSzSn-PRdtI&ab_channel=Maroon5VEVO"))
