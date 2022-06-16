@@ -50,6 +50,11 @@ def model_results():
     probabilities for each class/genre of music will be sent in the response.
     """
     query_param = request.args.get("songUrl")
+
+    # If input is empty then return an empty list
+    if query_param == "" or query_param is None:
+        return jsonify([])
+
     results = classifier.classify_youtube_audio(query_param)
     return jsonify(results)
 

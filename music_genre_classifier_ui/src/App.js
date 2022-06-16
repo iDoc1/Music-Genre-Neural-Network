@@ -7,7 +7,7 @@ import AboutPage from './pages/AboutPage';
 import TopNavbar from './components/Navbar';
 
 function App() {
-    const [videoUrl, setVideoUrl] = useState('');  // To provide 
+    const [videoUrl, setVideoUrl] = useState(null); // Provides url to model for testing
   
     return (
         <div className="App">

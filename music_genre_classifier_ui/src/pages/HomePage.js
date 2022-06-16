@@ -19,7 +19,7 @@ function HomePage({ setVideoUrl }) {
             alert(`Error while fetching YouTube records, status code = ${response.status}`);
         } else {
 
-            // Do nothing if response data is empty
+            // Check if response data is empty before proceeding
             if (Object.keys(data).length > 0) {            
                 setSongObjArr([]);  // Clear array first
                 
