@@ -40,7 +40,8 @@ class MusicGenreClassifier:
     def classify_youtube_audio(self, youtube_url):
         """
         Downloads the audio from the given YouTube URL then runs it through the
-        model and returns the resulting softmax probabilities
+        model and returns the resulting softmax probabilities rounded to 3 decimal
+        places
         """
         converted_audio_wav = self._save_youtube_wav_audio(youtube_url)
         samp_rate, wav_data = read(converted_audio_wav.get_wav_file_name())
@@ -63,7 +64,7 @@ class MusicGenreClassifier:
 
         # Delete wav file and return results as a list
         converted_audio_wav.delete_wav_file()
-        return results.tolist()
+        return np.around(results, decimals=3).tolist()
 
     def _save_youtube_wav_audio(self, youtube_url):
         """
