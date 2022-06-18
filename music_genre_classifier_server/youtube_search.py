@@ -13,7 +13,12 @@ class YouTubeSearch:
     This class represents a search performed on teh YouTube API
     """
 
-    def __init__(self, search_string, max_results):
+    def __init__(self, search_string, max_results, duration):
+        """
+        Creates a YouTubeSearch object given a search string, max number of
+        results, and a string 'short', 'medium', or 'long' specifying video
+        length
+        """
 
         # Get API key
         load_dotenv()
@@ -24,6 +29,7 @@ class YouTubeSearch:
             part="snippet",
             maxResults=max_results,
             type="video",
+            videoDuration=duration,
             q=search_string
         )
         self._response = request.execute()
@@ -51,6 +57,9 @@ class YouTubeSearch:
 
 # Test code to print search results for a specified query
 if __name__ == "__main__":
-    search = YouTubeSearch("green day", 3)
+    search = YouTubeSearch("green day", 3, "medium")
+    print(search.get_video_ids())
+    print(search.get_video_titles())
+    search = YouTubeSearch("green day", 2, "short")
     print(search.get_video_ids())
     print(search.get_video_titles())

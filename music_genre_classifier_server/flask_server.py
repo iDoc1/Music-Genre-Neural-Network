@@ -21,8 +21,12 @@ def get_youtube_results():
     if request.args.get("songName") == "":
         return jsonify([])
 
-    youtube_search = YouTubeSearch(request.args.get("songName"), 3)
-    video_id_list = youtube_search.get_video_ids()
+    # Combine results from short and medium duration queries
+    youtube_search_short = YouTubeSearch(request.args.get("songName"), 3, "short")
+    youtube_search_medium = YouTubeSearch(request.args.get("songName"), 3, "medium")
+    video_id_list_short = youtube_search_short.get_video_ids()
+    video_id_list_medium = youtube_search_medium.get_video_ids()
+    video_id_list = video_id_list_short + video_id_list_medium
 
     # Build video URL and thumbnail URL list
     url_list = []
@@ -34,8 +38,10 @@ def get_youtube_results():
         url_list.append(base_url + video_id)
         thumbnail_list.append(thumbnail_base_url + video_id + "/0.jpg")
 
-    # Get video title list
-    title_list = youtube_search.get_video_titles()
+    # Get video title list and combine for short and medium queries
+    title_list_short = youtube_search_short.get_video_titles()
+    title_list_medium = youtube_search_medium.get_video_titles()
+    title_list = title_list_short + title_list_medium
 
     # Build dict to return
     results = {"video_urls": url_list, "thumbnail_urls": thumbnail_list, "video_titles": title_list}
@@ -52,7 +58,7 @@ def model_results():
     query_param = request.args.get("songUrl")
 
     # If input is empty then return an empty list
-    if query_param == "" or query_param is None:
+    if query_param == "" or query_param is None or query_param == "null":
         return jsonify([])
 
     results = classifier.classify_youtube_audio(query_param)
