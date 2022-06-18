@@ -1,9 +1,10 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
+import BarChartResults from '../components/BarChartResults';
   
 function ResultsPage({ videoUrl }) {
     const [resultMessage, setResultMessage] = useState('');
-    const [modelResults, setModelResults] = useState(null);
+    const [modelResults, setModelResults] = useState([]);
 
     const fetchModelResults = async (urlToTest) => {
         const baseUrl = 'http://127.0.0.1:5000/model-results';
@@ -15,9 +16,10 @@ function ResultsPage({ videoUrl }) {
             alert(`Error while fetching model results, status code = ${response.status}`);
         } else {
 
-            // Check if response data is empty before proceeding
-            
-            setModelResults(data);
+            // Check if response data is empty before storing response data
+            if (data.length > 0) {
+                setModelResults(data);
+            }
         }
     }
 
@@ -35,7 +37,12 @@ function ResultsPage({ videoUrl }) {
         <> 
             <h1>Results Page</h1> 
             <p>{resultMessage}</p>
-            <p>{modelResults}</p>    
+            <p>{modelResults.length}</p> 
+            <div className='barChartContainer'>
+                {modelResults.map((resultArr, i) => <BarChartResults
+                    resultArr={resultArr}
+                    key={i}/>)}  
+            </div>
         </>
     );
 };
