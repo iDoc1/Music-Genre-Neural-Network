@@ -1,12 +1,13 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
  
-function Thumbnail({ songInfo, setVideoUrl }) {
+function Thumbnail({ songInfo, setVideoUrl, setVideoTitle }) {
     const navigate = useNavigate();
 
     // Sends request to run song through results, then shows results page
     const showModelResults = () => {
         setVideoUrl(songInfo.videoUrl);
+        setVideoTitle(songInfo.videoTitle);
         navigate('/results');
     }
 

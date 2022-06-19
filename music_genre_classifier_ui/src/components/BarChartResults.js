@@ -1,73 +1,77 @@
 import React from 'react';
-import BarChart from 'react-easy-bar-chart';
+import {
+    Chart as ChartJS,
+    CategoryScale,
+    LinearScale,
+    BarElement,
+    Title,
+    Tooltip,
+    Legend,
+  } from 'chart.js';
+import { Bar } from 'react-chartjs-2';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
-function BarChartResults({ resultArr, sampleLocation }) {
-    const data = [
-        {
-            title:  "Rock",
-            value: resultArr[0],
-            color: "#196f3d",
+/**
+ * Returns a compnent containing a barchart of the result probabilities.
+ * This code was adapted from URL: https://codesandbox.io/s/jebqk?file=/App.tsx:27-216
+ */
+function BarChartResults({resultArr, sampleLocation, barChartColor}) {
+
+    ChartJS.register(
+        CategoryScale,
+        LinearScale,
+        BarElement,
+        Title,
+        Tooltip,
+        Legend
+      );
+      
+    const options = {
+        responsive: true,
+        plugins: {
+          legend: {
+            position: 'top',
+          },
+          title: {
+            display: true,
+            text: `${sampleLocation} Sample`,
+          },
         },
-        {
-            title:  "Blues",
-            value: resultArr[1],
-            color: "#a93226",
-        },
-        {
-            title:  "Classical",
-            value: resultArr[2],
-            color: " #1f618d",
-        },
-        {
-            title:  "Country",
-            value: resultArr[3],
-            color: "#839192",
-        },
-        {
-            title:  "Disco",
-            value: resultArr[4],
-            color: "#d35400",
-        },
-        {
-            title:  "Hiphop",
-            value: resultArr[5],
-            color: " #a9cce3",
-        },
-        {
-            title:  "Jazz",
-            value: resultArr[6],
-            color: "#2e4053",
-        },
-        {
-            title:  "Metal",
-            value: resultArr[7],
-            color: "#186a3b",
-        },
-        {
-            title:  "Pop",
-            value: resultArr[8],
-            color: "#fc03f4",
-        },
-        {
-            title:  "Reggae",
-            value: resultArr[9],
-            color: "#ebfc03",
-        },
-        ];
+        scales: {
+            yAxes: [{
+                display: true,
+                ticks: {
+                    min: 0,
+                    max: 1,
+                    stepSize: 0.1
+                }
+            }]
+        }
+      };
+      
+      const labels = ['rock', 'blues', 'classical', 'country', 'disco', 'hiphop', 'jazz', 'metal', 'pop', 'reggae'];
+      
+      const data = {
+        labels,
+        datasets: [
+          {
+            label: 'Probability',
+            data: resultArr,
+            backgroundColor: barChartColor,
+          },
+        ],
+      };
 
     return (
         <>
             <div className='barchartAndHeaderContainer'>
-            <h4>Results - {sampleLocation} Sample</h4>
-            <BarChart 
-                xAxis='Genres'
-                yAxis="Probablities"
-                height={400}
-                width={800}
-                data={data}
-            />
+                <Bar
+                    data={data}
+                    height={400}
+                    width={400}
+                    options={options}
+                />
             </div>
         </>
     );

@@ -4,7 +4,7 @@ import SearchBox from '../components/SearchBox';
 import Thumbnail from '../components/Thumbnail';
 import InfoText from '../components/InfoText';
   
-function HomePage({ setVideoUrl }) {
+function HomePage({ setVideoUrl, setVideoTitle }) {
     const [songObjArr, setSongObjArr] = useState([]);
     const [infoTextCount, setInfoTextCount] = useState(0);
 
@@ -49,6 +49,7 @@ function HomePage({ setVideoUrl }) {
                     songInfo={songObj}
                     setVideoUrl={setVideoUrl}
                     setInfoTextCount={setInfoTextCount}
+                    setVideoTitle={setVideoTitle}
                     key={i}/>)}                
             </div>
             {[...Array(infoTextCount)].map((_, i) => <InfoText

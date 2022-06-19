@@ -2,12 +2,19 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import BarChartResults from '../components/BarChartResults';
 
-// Specifies the locations for which audio samples are passed through the model
-const sampleLocations = ['Start', 'Middle', 'End'];
 
-function ResultsPage({ videoUrl }) {
+/**
+ * Defines the page that displays teh bar chart results
+ */
+function ResultsPage({ videoUrl, videoTitle }) {
     const [resultMessage, setResultMessage] = useState('');
     const [modelResults, setModelResults] = useState([]);
+
+    // Specifies the locations for which audio samples are passed through the model
+    const sampleLocations = ['Start', 'Middle', 'End'];
+
+    // Specifies colors for each bar chart
+    const barChartColors = ['red', 'blue', 'green'];
 
     // Call server to run the audio at the given URL through the model and get the results
     const fetchModelResults = async (urlToTest) => {
@@ -29,12 +36,9 @@ function ResultsPage({ videoUrl }) {
 
     // On page render, run model using audio of given video URL then display results    
     useEffect(() => {
-        setResultMessage(`Showing results for URL: ${videoUrl}`);
-        
-        // run model
+        setResultMessage(`Showing results for: "${videoTitle}"`);
         fetchModelResults(videoUrl);    
-
-    }, [videoUrl])
+    }, [videoTitle, videoUrl])
 
     
     return (
@@ -45,6 +49,7 @@ function ResultsPage({ videoUrl }) {
                 {modelResults.map((resultArr, i) => <BarChartResults
                     resultArr={resultArr}
                     sampleLocation={[sampleLocations[i]]}
+                    barChartColor={barChartColors[i]}
                     key={i}/>)}  
             </div>
         </>

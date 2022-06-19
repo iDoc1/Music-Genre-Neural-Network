@@ -7,15 +7,16 @@ import AboutPage from './pages/AboutPage';
 import TopNavbar from './components/Navbar';
 
 function App() {
-    const [videoUrl, setVideoUrl] = useState(null); // Provides url to model for testing
+    const [videoUrl, setVideoUrl] = useState(null); // Provides URL to model for testing
+    const [videoTitle, setVideoTitle] = useState(null);
   
     return (
         <div className="App">
         <Router>
             <TopNavbar/>
             <Routes>
-            <Route path='/' exact element={<HomePage setVideoUrl={setVideoUrl}/>} />
-            <Route path='/results' element={<ResultsPage videoUrl={videoUrl}/>} />
+            <Route path='/' exact element={<HomePage setVideoUrl={setVideoUrl} setVideoTitle={setVideoTitle}/>} />
+            <Route path='/results' element={<ResultsPage videoUrl={videoUrl} videoTitle={videoTitle}/>} />
             <Route path='/about' element={<AboutPage />} />
             </Routes>
         </Router>
