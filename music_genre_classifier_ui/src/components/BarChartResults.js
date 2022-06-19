@@ -39,14 +39,10 @@ function BarChartResults({resultArr, sampleLocation, barChartColor}) {
           },
         },
         scales: {
-            yAxes: [{
-                display: true,
-                ticks: {
-                    min: 0,
-                    max: 1,
-                    stepSize: 0.1
-                }
-            }]
+            y: {
+                min: 0,
+                max: 1,                    
+            }
         }
       };
       

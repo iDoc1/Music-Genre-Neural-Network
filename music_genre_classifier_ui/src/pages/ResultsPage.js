@@ -45,6 +45,7 @@ function ResultsPage({ videoUrl, videoTitle }) {
         <> 
             <h1>Model Results</h1> 
             <p>{resultMessage}</p>
+            <p>Three samples were tested from the start, middle, and end of the audio</p>
             <div className='barChartContainer'>
                 {modelResults.map((resultArr, i) => <BarChartResults
                     resultArr={resultArr}
