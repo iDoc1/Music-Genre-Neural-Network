@@ -3,59 +3,72 @@ import BarChart from 'react-easy-bar-chart';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
-function BarChartResults({ resultArr }) {
+function BarChartResults({ resultArr, sampleLocation }) {
     const data = [
         {
-          title:  "Maths",
-          value: 10,
-          color: "#196f3d",
+            title:  "Rock",
+            value: resultArr[0],
+            color: "#196f3d",
         },
         {
-          title:  "English",
-          value: 14,
-          color: "#a93226",
+            title:  "Blues",
+            value: resultArr[1],
+            color: "#a93226",
         },
         {
-          title:  "Physics",
-          value: 2,
-          color: " #1f618d",
+            title:  "Classical",
+            value: resultArr[2],
+            color: " #1f618d",
         },
         {
-          title:  "Chemistry",
-          value: 20,
-          color: "#839192",
+            title:  "Country",
+            value: resultArr[3],
+            color: "#839192",
         },
         {
-          title:  "Psychology",
-          value: 15,
-          color: "#d35400",
+            title:  "Disco",
+            value: resultArr[4],
+            color: "#d35400",
         },
         {
-          title:  "Biology",
-          value: 12,
-          color: " #a9cce3",
+            title:  "Hiphop",
+            value: resultArr[5],
+            color: " #a9cce3",
         },
         {
-          title:  "Economics",
-          value: 5,
-          color: "#2e4053",
+            title:  "Jazz",
+            value: resultArr[6],
+            color: "#2e4053",
         },
         {
-          title:  "Social Science",
-          value: 6,
-          color: "#186a3b",
+            title:  "Metal",
+            value: resultArr[7],
+            color: "#186a3b",
+        },
+        {
+            title:  "Pop",
+            value: resultArr[8],
+            color: "#fc03f4",
+        },
+        {
+            title:  "Reggae",
+            value: resultArr[9],
+            color: "#ebfc03",
         },
         ];
 
     return (
         <>
-        <BarChart 
-          xAxis='Genres'
-          yAxis="Model Probablities"
-          height={400}
-          width={800}
-          data={data}
-        />
+            <div className='barchartAndHeaderContainer'>
+            <h4>Results - {sampleLocation} Sample</h4>
+            <BarChart 
+                xAxis='Genres'
+                yAxis="Probablities"
+                height={400}
+                width={800}
+                data={data}
+            />
+            </div>
         </>
     );
 }

@@ -8,7 +8,7 @@ function HomePage({ setVideoUrl }) {
     const [songObjArr, setSongObjArr] = useState([]);
     const [infoTextCount, setInfoTextCount] = useState(0);
 
-  // Call server to get YouTube search data given the queryString submitted by user
+    // Call server to get YouTube search data given the queryString submitted by user
     const fetchSearchData = async (queryString) => {        
         const baseUrl = 'http://127.0.0.1:5000/youtube-search-results';
         const response = await fetch(baseUrl + `?songName=${encodeURIComponent(queryString)}`);

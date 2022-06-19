@@ -1,11 +1,15 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import BarChartResults from '../components/BarChartResults';
-  
+
+// Specifies the locations for which audio samples are passed through the model
+const sampleLocations = ['Start', 'Middle', 'End'];
+
 function ResultsPage({ videoUrl }) {
     const [resultMessage, setResultMessage] = useState('');
     const [modelResults, setModelResults] = useState([]);
 
+    // Call server to run the audio at the given URL through the model and get the results
     const fetchModelResults = async (urlToTest) => {
         const baseUrl = 'http://127.0.0.1:5000/model-results';
         const response = await fetch(baseUrl + `?songUrl=${encodeURIComponent(urlToTest)}`);
@@ -35,12 +39,12 @@ function ResultsPage({ videoUrl }) {
     
     return (
         <> 
-            <h1>Results Page</h1> 
+            <h1>Model Results</h1> 
             <p>{resultMessage}</p>
-            <p>{modelResults.length}</p> 
             <div className='barChartContainer'>
                 {modelResults.map((resultArr, i) => <BarChartResults
                     resultArr={resultArr}
+                    sampleLocation={[sampleLocations[i]]}
                     key={i}/>)}  
             </div>
         </>
