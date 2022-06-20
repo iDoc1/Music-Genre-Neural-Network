@@ -5,6 +5,8 @@ import HomePage from './pages/HomePage';
 import ResultsPage from './pages/ResultsPage';
 import AboutPage from './pages/AboutPage';
 import TopNavbar from './components/Navbar';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 
 function App() {
     const [videoUrl, setVideoUrl] = useState(null); // Provides URL to model for testing

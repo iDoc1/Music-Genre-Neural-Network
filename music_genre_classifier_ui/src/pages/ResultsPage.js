@@ -1,14 +1,16 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import BarChartResults from '../components/BarChartResults';
+import LoadingSpinner from '../components/LoadingSpinnger';
 
 
 /**
- * Defines the page that displays teh bar chart results
+ * Defines the page that displays the bar chart results
  */
 function ResultsPage({ videoUrl, videoTitle }) {
     const [resultMessage, setResultMessage] = useState('');
-    const [modelResults, setModelResults] = useState([]);
+    const [modelResults, setModelResults] = useState([]);  // To store results for barcharts
+    const [isLoading, setIsLoading] = useState(false);  // Determines if spinner is shown
 
     // Specifies the locations for which audio samples are passed through the model
     const sampleLocations = ['Start', 'Middle', 'End'];
@@ -18,6 +20,8 @@ function ResultsPage({ videoUrl, videoTitle }) {
 
     // Call server to run the audio at the given URL through the model and get the results
     const fetchModelResults = async (urlToTest) => {
+        setIsLoading(true);  // Show spinner
+
         const baseUrl = 'http://127.0.0.1:5000/model-results';
         const response = await fetch(baseUrl + `?songUrl=${encodeURIComponent(urlToTest)}`);
         const data = await response.json();
@@ -32,11 +36,20 @@ function ResultsPage({ videoUrl, videoTitle }) {
                 setModelResults(data);
             }
         }
+
+        setIsLoading(false);  // Stop showing spinner
     }
 
     // On page render, run model using audio of given video URL then display results    
     useEffect(() => {
-        setResultMessage(`Showing results for: "${videoTitle}"`);
+
+        // Check if videoUrl state has been set
+        if (videoUrl != null){
+            setResultMessage(`Showing results for: "${videoTitle}"`);
+        } else {
+            setResultMessage('No results to show. Use Model Accuracy Tester to obtain results.');
+        }
+
         fetchModelResults(videoUrl);    
     }, [videoTitle, videoUrl])
 
@@ -45,14 +58,15 @@ function ResultsPage({ videoUrl, videoTitle }) {
         <> 
             <h1>Model Results</h1> 
             <p>{resultMessage}</p>
-            <p>Three samples were tested from the start, middle, and end of the audio</p>
             <div className='barChartContainer'>
                 {modelResults.map((resultArr, i) => <BarChartResults
                     resultArr={resultArr}
                     sampleLocation={[sampleLocations[i]]}
                     barChartColor={barChartColors[i]}
                     key={i}/>)}  
+                <LoadingSpinner isLoading={isLoading}/>
             </div>
+            
         </>
     );
 };
