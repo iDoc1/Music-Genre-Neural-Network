@@ -1,5 +1,8 @@
 import React from 'react';
-  
+
+/**
+ * Defines the page that shared info about this project
+ */
 function AboutPage() {
   return (
     <>
@@ -7,7 +10,7 @@ function AboutPage() {
         <br/>
 
         <h3>How to Use This Website</h3>
-        <p>
+        <p className='aboutPageParagraph'>
             The purpose of this website is to provide a way to visualize how well the neural network
             model classifies music genres in real-worl scenarios. To use the tool, simply go to the
             Model Accuracy Tester page, enter the name of a song you would like to test, click on the
@@ -17,7 +20,7 @@ function AboutPage() {
         <br/>
 
         <h3>Source Code</h3>
-        <p>
+        <p className='aboutPageParagraph'>
             To view the source code and in-depth documentation on how this website and the associated
             neural network was developed, follow the below link to the project GitHub repository:        
         </p>
@@ -32,7 +35,7 @@ function AboutPage() {
         <br/>
 
         <h3>Details on Model Accuracy</h3>
-        <p>
+        <p className='aboutPageParagraph'>
             If you read through the README at the above GitHub link you will learn that the model achieved
             about 81% accuracy on the test data. However, if you actually test the tool yourself you will
             find that the classification of genres is often wildly inaccurate. This indicates multiple
@@ -46,7 +49,7 @@ function AboutPage() {
         <br/>
 
         <h3>About the Developer</h3>
-        <p>
+        <p className='aboutPageParagraph'>
             My name is Ian Docherty and I'm an aspiring software engineer. I used this project to teach 
             myself the fundamentals of machine learning using traditional and convolutional neural networks. 
             Instead of simply building and training a neural network, I wanted to try and build something 

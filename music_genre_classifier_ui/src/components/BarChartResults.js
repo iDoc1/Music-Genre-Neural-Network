@@ -11,9 +11,8 @@ import {
 import { Bar } from 'react-chartjs-2';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-
 /**
- * Returns a compnent containing a barchart of the result probabilities.
+ * Returns a component containing a barchart of the result probabilities.
  * This code was adapted from URL: https://codesandbox.io/s/jebqk?file=/App.tsx:27-216
  */
 function BarChartResults({resultArr, sampleLocation, barChartColor}) {

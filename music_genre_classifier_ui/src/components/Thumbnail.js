@@ -1,6 +1,10 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
- 
+
+/**
+ * Returns a component that displays a YouTube video thumbnail image with 
+ * a title and link to the video
+ */
 function Thumbnail({ songInfo, setVideoUrl, setVideoTitle }) {
     const navigate = useNavigate();
 

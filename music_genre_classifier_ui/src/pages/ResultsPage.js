@@ -44,15 +44,13 @@ function ResultsPage({ videoUrl, videoTitle }) {
     useEffect(() => {
 
         // Check if videoUrl state has been set
-        if (videoUrl != null){
+        if (videoUrl != null) {
             setResultMessage(`Showing results for: "${videoTitle}"`);
             fetchModelResults(videoUrl);
         } else {
             setResultMessage('No results to show. Use Model Accuracy Tester to obtain results.');
         }
-    
     }, [videoTitle, videoUrl])
-
     
     return (
         <> 
@@ -66,7 +64,6 @@ function ResultsPage({ videoUrl, videoTitle }) {
                     key={i}/>)}  
                 <LoadingSpinner isLoading={isLoading}/>
             </div>
-            
         </>
     );
 };

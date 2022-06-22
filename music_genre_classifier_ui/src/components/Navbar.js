@@ -1,7 +1,9 @@
 import React from 'react';
 import { Navbar, Container, Nav } from 'react-bootstrap'
 
-
+/**
+ * Returns a component that displays the navigation bar
+ */
 function TopNavbar() {
     
     return (

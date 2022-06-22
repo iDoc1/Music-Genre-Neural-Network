@@ -1,9 +1,10 @@
 import React from 'react';
 import { Oval } from 'react-loader-spinner';
 
-
-function LoadingSpinner({isLoading}) {
-    
+/**
+ * Returns a component that displays an animated loading spinner
+ */
+function LoadingSpinner({isLoading}) {    
     if (isLoading) {
         return (
             <>

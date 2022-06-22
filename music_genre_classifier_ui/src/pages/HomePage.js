@@ -3,7 +3,10 @@ import { useState } from 'react';
 import SearchBox from '../components/SearchBox';
 import Thumbnail from '../components/Thumbnail';
 import InfoText from '../components/InfoText';
-  
+
+/**
+ * Defines the home page for the website that contains a search box
+ */
 function HomePage({ setVideoUrl, setVideoTitle }) {
     const [songObjArr, setSongObjArr] = useState([]);
     const [infoTextCount, setInfoTextCount] = useState(0);
@@ -48,12 +51,14 @@ function HomePage({ setVideoUrl, setVideoTitle }) {
                 {songObjArr.map((songObj, i) => <Thumbnail
                     songInfo={songObj}
                     setVideoUrl={setVideoUrl}
-                    setInfoTextCount={setInfoTextCount}
+                    
                     setVideoTitle={setVideoTitle}
                     key={i}/>)}                
             </div>
-            {[...Array(infoTextCount)].map((_, i) => <InfoText
-                    key={i}/>)}
+            <div className='infoTextContainer'>
+                {[...Array(infoTextCount)].map((_, i) => <InfoText
+                        key={i}/>)}
+            </div>
         </>
     );
 };

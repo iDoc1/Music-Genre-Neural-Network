@@ -70,7 +70,13 @@
     margin: 2vw;
 }
 
-p {
+.infoTextContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.aboutPageParagraph {
     margin-left: 25%;
     margin-right: 25%;
     text-align:left;
