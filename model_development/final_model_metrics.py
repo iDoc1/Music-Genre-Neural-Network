@@ -10,16 +10,16 @@ from tabulate import tabulate
 from sklearn.metrics import classification_report
 
 NUM_CLASSES = 10
-LABELS = {1: "blues",
-          2: "classical",
-          3: "country",
-          4: "disco",
-          5: "hiphop",
-          6: "jazz",
-          7: "metal",
-          8: "pop",
-          9: "reggae",
-          0: "rock"}
+LABELS = {0: "blues",
+          1: "classical",
+          2: "country",
+          3: "disco",
+          4: "hiphop",
+          5: "jazz",
+          6: "metal",
+          7: "pop",
+          8: "reggae",
+          9: "rock"}
 
 
 def print_confusion_matrix(labels, predictions):
