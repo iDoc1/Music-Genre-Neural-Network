@@ -39,12 +39,13 @@ function AboutPage() {
             If you read through the README at the above GitHub link you will learn that the model achieved
             about 81% accuracy on the test data. However, if you actually test the tool yourself you will
             find that the classification of genres is often wildly inaccurate. This indicates multiple
-            issues. First, is that there is not enough test data. The GTZAN dataset used to train the model
-            is not very diverse, large, or even that accurate in how the dataset has the genres labeled.
-            The GTZAN dataset is one of the most popular music genre training sets available, but is
-            obviously lacking. As described in the README, in order to make the model more accurate a larger,
-            more diverse, and more accurate datset is needed. In addition, trying a different approach, such 
-            as a Recurrent Neural Network might also prove useful.
+            issues. First, there is not enough test data. The GTZAN dataset used to train the model
+            is not very diverse, high quality, large, or even that accurate in how the dataset has the genres 
+            labeled. The GTZAN dataset is one of the most accessible music genre training sets available, but is
+            obviously lacking. In order to make the model more accurate, a larger, more diverse, and more accurate 
+            dataset is needed. In addition, trying a different approach, such as a Recurrent Neural Network might 
+            also prove useful. Future iterations of this project may involve using a different dataset and/or 
+            utilizing a different type of neural network.
         </p>
         <br/>
 

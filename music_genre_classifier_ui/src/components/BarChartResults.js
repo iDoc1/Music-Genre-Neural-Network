@@ -45,7 +45,7 @@ function BarChartResults({resultArr, sampleLocation, barChartColor}) {
         }
       };
       
-      const labels = ['rock', 'blues', 'classical', 'country', 'disco', 'hiphop', 'jazz', 'metal', 'pop', 'reggae'];
+      const labels = ['blues', 'classical', 'country', 'disco', 'hiphop', 'jazz', 'metal', 'pop', 'reggae', 'rock'];
       
       const data = {
         labels,

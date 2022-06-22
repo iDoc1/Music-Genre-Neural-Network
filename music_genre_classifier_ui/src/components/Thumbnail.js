@@ -19,13 +19,19 @@ function Thumbnail({ songInfo, setVideoUrl, setVideoTitle }) {
         <> 
             <div className='imgContainer'>
                 <img 
-                className='imgThumbnail'
-                src={songInfo.videoImgUrl}
-                alt='new'
-                onClick={showModelResults}
+                    className='imgThumbnail'
+                    src={songInfo.videoImgUrl}
+                    alt='new'
+                    onClick={showModelResults}
                 />
                 <figcaption>{songInfo.videoTitle}</figcaption>
-                <a className='videoLink' href={songInfo.videoUrl}>Video Link</a>
+                <a 
+                    className='videoLink' 
+                    target='_blank'
+                    rel='noreferrer'
+                    href={songInfo.videoUrl}>
+                    Video Link
+                </a>
             </div>       
         </>
     );
