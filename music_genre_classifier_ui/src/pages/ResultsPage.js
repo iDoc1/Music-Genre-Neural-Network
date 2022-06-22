@@ -46,11 +46,11 @@ function ResultsPage({ videoUrl, videoTitle }) {
         // Check if videoUrl state has been set
         if (videoUrl != null){
             setResultMessage(`Showing results for: "${videoTitle}"`);
+            fetchModelResults(videoUrl);
         } else {
             setResultMessage('No results to show. Use Model Accuracy Tester to obtain results.');
         }
-
-        fetchModelResults(videoUrl);    
+    
     }, [videoTitle, videoUrl])
 
     

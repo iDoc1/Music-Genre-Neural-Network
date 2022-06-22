@@ -69,3 +69,9 @@
 .barchartAndHeaderContainer {
     margin: 2vw;
 }
+
+p {
+    margin-left: 25%;
+    margin-right: 25%;
+    text-align:left;
+}
