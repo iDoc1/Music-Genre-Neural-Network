@@ -25,18 +25,6 @@ class MusicGenreClassifier:
     def __init__(self):
         self._model = load_model("../model_development/final_model/gtzan_2d_cnn_deep0.h5")
 
-        # Class numbers as trained in the neural network
-        self._classes = {1: "blues",
-                         2: "classical",
-                         3: "country",
-                         4: "disco",
-                         5: "hiphop",
-                         6: "jazz",
-                         7: "metal",
-                         8: "pop",
-                         9: "reggae",
-                         0: "rock"}
-
     def classify_youtube_audio(self, youtube_url):
         """
         Downloads the audio from the given YouTube URL then runs it through the
