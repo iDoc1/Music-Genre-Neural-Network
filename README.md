@@ -124,6 +124,20 @@ The recall is calculates as: # of true positives / (# of true positives + # of f
 
 The F1 score combines the previous two metrics into a single metric by calculating the average of the precision and recall. A high F1 score indicates that both precision and recall are high. Thus, we can see that classical music has the highest F1 score and rock has the lowest. This means that the model is good at classifying classical music in the test dataset and bad at classifying rock music.
 
+## Real World Testing
+In addition to developing the model, I also created a web application to test the model on any song of your choice. The web application, which is linked at the top of this README, allows the user to enter the name of a song on YouTube, extracts three 3-second samples from the audio, then runs these sampls through the model and shows the results. Here are some sample outputs:
+
+![chopin](/readme_images/chopin.png)  
+We can see above that 2 of the three samples from the song are correctly classified as classical music. Not bad.  
+
+![katy_perry](/readme_images/katy_perry.png)  
+In the above Katy Perry samples we also see that the model correctly classifies the genre as pop.  
+  
+![dr_dre](/readme_images/dr_dre.png)  
+However, in the results from Dr. Dre, we see that only the middle sampel is correctly classified as hiphop. The other samples are either completely wrong or show multiple genres as having a high probability.  
+
+These results indicate that, while the model may perform well on some genres in the test dataset, it doesn't always perform well on real world data.
+
 ## Next Steps
 Initially, I had hoped to achieve a higher accuracy on the test dataset. After a bit of research I found that an accuracy of 81% is not at all unusual for the GTZAN dataset using a convolutional neural network. For example, the paper at the following link, https://www.diva-portal.org/smash/get/diva2:1354738/FULLTEXT01.pdf, only achieved a 56% accuracy. The data scientists at this link, https://publikationen.bibliothek.kit.edu/1000118785/71295164, achieved an 84% accuracy using a residual neural network, which is a type of convolutional neural network.
 
