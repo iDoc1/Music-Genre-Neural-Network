@@ -82,7 +82,7 @@ The last change I made to produce the final model was to decrease the epochs fro
 ## Final Results
 
 ### Test Set Accuracy
-As mentioned previously, the highest performing model achieved 80.8% accuracy on the test dataset. This model used the deep0 architecture with a learning rate of 0.005, 20 epochs, and HE normal weight initialization.IardYtre1!
+As mentioned previously, the highest performing model achieved 80.8% accuracy on the test dataset. This model used the deep0 architecture with a learning rate of 0.005, 20 epochs, and HE normal weight initialization.
 
 ### Confusion Matrix
 The classes for the confusion matrix are listed here:  
@@ -127,7 +127,7 @@ The F1 score combines the previous two metrics into a single metric by calculati
 ## Next Steps
 Initially, I had hoped to achieve a higher accuracy on the test dataset. After a bit of research I found that an accuracy of 81% is not at all unusual for the GTZAN dataset using a convolutional neural network. For example, the paper at the following link, https://www.diva-portal.org/smash/get/diva2:1354738/FULLTEXT01.pdf, only achieved a 56% accuracy. The data scientists at this link, https://publikationen.bibliothek.kit.edu/1000118785/71295164, achieved an 84% accuracy using a residual neural network, which is a type of convolutional neural network.
 
-This tells me that the dataset itself is insufficient and that more data is needed to achieve an accuracy in inexcess of 90%. In addition, the GTZAN dataset is not very diverse, has variations in quality, and it is questionable about whether all of the songs are accurately labeled with their correct genres. In order to achieve a better performing model a larger, higher quality dataset is necessary. In addition, trying a different deep learning architecture, such as a residual neural network, might also prove useful.
+This tells me that the dataset itself is insufficient and that more data is needed to achieve an accuracy in excess of 90%. In addition, the GTZAN dataset is not very diverse, has variations in quality, and it is questionable about whether all of the songs are accurately labeled with their correct genres. In order to achieve a better performing model a larger, higher quality dataset is necessary. In addition, trying a different deep learning architecture, such as a residual neural network, might also prove useful.
 
 If you made it this far, thanks for reading! If not, be sure to check out the website link at the top of the README to test the neural network on real world data. 
 
