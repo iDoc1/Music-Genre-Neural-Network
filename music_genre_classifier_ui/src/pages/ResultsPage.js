@@ -22,7 +22,7 @@ function ResultsPage({ videoUrl, videoTitle }) {
     const fetchModelResults = async (urlToTest) => {
         setIsLoading(true);  // Show spinner
 
-        const baseUrl = 'http://127.0.0.1:5000/model-results';
+        const baseUrl = '/model-results';
         const response = await fetch(baseUrl + `?songUrl=${encodeURIComponent(urlToTest)}`);
         const data = await response.json();
 

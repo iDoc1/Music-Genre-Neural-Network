@@ -15,7 +15,7 @@ function AboutPage() {
             model classifies music genres in real-worl scenarios. To use the tool, simply go to the
             Model Accuracy Tester page, enter the name of a song you would like to test, click on the
             YouTube thumbnail image that pops up, then view the results for audio samples taken from
-            the start, middle, and end of the given audio.
+            the start, middle, and end of the selected audio.
         </p>
         <br/>
 
