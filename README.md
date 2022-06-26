@@ -3,8 +3,7 @@
 ## Background
 The purpose of this project was to give myself hands-on experience developing and training a neural network. I
 began my journey into neural networks by working my way through the textbook "Practical Deep Learning" by Ron
-Kneusel (which I believe is an excellent introduction to the world of deep learning). In order to solidify my
-skills, I used the knowledge gained from this textbook to start my own deep learning project.
+Kneusel. In order to solidify my skills, I used the knowledge gained from this textbook to start my own deep learning project, which is where the idea for this project started.
 
 For this project I decided to use the GTZAN dataset to train a model that can classify songs by their genre. This
 dataset is very popular and easily accessible, but it does have limitations, which I'll describe later on. The 
@@ -15,7 +14,7 @@ a YouTube video to test the model with. The website provides a quick and easy wa
 model in a real-world setting.
 
 You'll notice that there are three main project directories, as described below:  
-* model_development: contains all the scripts I used to prepare the data, build, and train the model.
+* model_development: contains all the scripts I used to prepare the data, build, and train the model
 * music_genre_classifier_ui: contains the code used to build the React UI
 * music_genre_classifier_server: contains the code used to build the Flask server
 
@@ -29,9 +28,9 @@ audio file into ten 3 second samples for a total of 10000 samples.
 
 During this step, however, I discovered that many of the audio files were not actually 30 seconds long. For the sake of maintaining the 3 second long samples, I decided to split each audio file into nine samples instead for a total of 9000 samples. Although I could have used a shorter sample length like 2.5 or 2.7 seconds, I opted to stay with 3 seconds because dealing with a whole number would keep the calculations simple and ensure that I didn't end up with non-integer values later on (for example, dividing the sampling rate 22050 by 3 is a whole number, but dividing by 2.7 is not). This was my first lesson during this project on the importance of quality datasets.
 
-My next step was to randomize the data and split it into training and test data. I opted for a 90/10 split of training to test since the dataset size is relatively small. I then processed the audio files and only kept every 50th data point. Since the sampling rate of the dataset os 22050 Hz, it's not necessary to keep every data point in order to classify the audio.
+My next step was to randomize the data and split it into training and test data. I opted for a 90/10 split of training to test since the dataset size is relatively small. I then processed the audio files and only kept every 50th data point. Since the sampling rate of the dataset is 22050 Hz, it's not necessary to keep every data point in order to classify the audio.
 
-Lastly, I save the training and test datasets as Numpy arrays to be used as input for the classical models and traditional neural network models.
+Lastly, I saved the training and test datasets as numpy arrays to be used as input for the classical models and traditional neural network models.
 
 ### Classical Models
 I used the scikit-learn library to attempt to create a genre classifier using the following models:
@@ -41,10 +40,10 @@ I used the scikit-learn library to attempt to create a genre classifier using th
 * Random Forest
 * SVM
 
-The results were horrible. The test data accuracies are summarized in the "classical_models_results.txt" file. The Random Forest with 500 tress achieved about 26% accuracy. The rest achieve 10-20% accuracy, just barely better than randomly guessing one of the 10 possible genres. The meant that I needed to try a different approach.
+The results were horrible. The test data accuracies are summarized in the "classical_models_results.txt" file. The Random Forest with 500 tress achieved about 26% accuracy. The rest achieved 10-20% accuracy, just barely better than randomly guessing one of the 10 possible genres. This meant that I needed to try a different approach.
 
 ### Traditional Model
-The next approach I took was to utilize Tensorflow to build a traditional, forward feed neural network. The network I build consisted on 3 hidden layers and a softmax output layer with dropout applied after each hidden layer. The model is defined in the "traditional_neural_network.py" file.
+The next approach I took was to utilize Tensorflow to build a traditional, forward feed neural network. The network I built consisted of 3 hidden layers and a softmax output layer with dropout applied after each hidden layer. The model is defined in the "traditional_neural_network.py" file.
 
 This model achieved about 24% accuracy on the test data - worse than the Random Forest approach. Again, this signaled that I needed to try another approach.
 
@@ -54,7 +53,7 @@ Next, I created a set of 1-dimensional convolutional neural network models rangi
 ## Model Development - Phase 2
 
 ### About Spectrograms
-As summarized by Towards Data Science (cited at bottom), "audio signal is a complex signal composed of multiple ‘single-frequency sound waves’ which travel together as a disturbance(pressure-change) in the medium". When a sound is recorded, we capture the resulting amplitude of those individual waves, which is what makes up the data in an audio file in combination with the sampling rate of the audio. Fourier Transform is a mathematical technique with can take a wave signal and decompose it into its constituent waves as a function of time. Essentially, Fourier Transforms break down a complex wave into the individual, simple waves that compose the complex wave. In addition, we can also use this technique to get the frequency of each component wave.
+As summarized by Towards Data Science (cited at bottom), an "audio signal is a complex signal composed of multiple ‘single-frequency sound waves’ which travel together as a disturbance(pressure-change) in the medium". When a sound is recorded, we capture the resulting amplitude of those individual waves, which is what makes up the data in an audio file in combination with the sampling rate of the audio. Fourier Transform is a mathematical technique with can take a wave signal and decompose it into its constituent waves as a function of time. Essentially, Fourier Transforms break down a complex wave into the individual, simple waves that compose the complex wave. In addition, we can also use this technique to get the frequency of each component wave.
 
 This is where spectrograms come into play. At each moment in time in the audio wave, we can use Fourier Transforms to break the complex wave into its components, and then find the frequency of each of these components. We can then plot this on a 3-dimensional graph, where the x-axis is time, the y-axis is the frequency, and the color represents the density (number of occurences) of each frequency. The produces an image, such as the following:
 ![spectrogram](/readme_images/spectrogram_example.png)
@@ -67,7 +66,7 @@ Using a command-line program called Sox, I took each 3-second audio sample and p
 The last step was to convert each image into a numpy array. I combined all the resulting image arrays into one large 9000x100x160x3 dimensional array. The 3 comes from the fact that a color image file is composed of 3 separate RGB images. After randomizing the order of the images, I split the dataset into 8100 and 900 samples for a 90/10 training to test data split.
 
 ### 2D Convolutional Neural Network Model
-To find the optimal model architecture, I followed a process similar to that of the traditional neural network training where I tested different depth neural networks with different kernel sizes. The results for each step in the process I documented in the "cnn_2d_models_results.txt" file. I used 90% of the data for training, 5% for validation, and 5% held back for testing only.
+To find the optimal model architecture, I followed a process similar to that of the traditional neural network training where I tested different depth neural networks with different kernel sizes. The results for each step in the process are documented in the "cnn_2d_models_results.txt" file. I used 90% of the data for training, 5% for validation, and 5% for testing only.
 
 First, I constructed three deep networks named deep0, deep1, and deep2 with 3, 4, and 5 convolutional layers respectively. I varied the kernel size from 3x3 to 7x7 for each. The highest accuracy network was the deep0 model with a 3x3 kernel that achieved about 77% accuracy on the test dataset. This is a significant improvement over the traditional model, but I felt I could do better.
 
@@ -82,7 +81,7 @@ The last change I made to produce the final model was to decrease the epochs fro
 ## Final Results
 
 ### Test Set Accuracy
-As mentioned previously, the highest performing model achieved 80.8% accuracy on the test dataset. This model used the deep0 architecture with a learning rate of 0.005, 20 epochs, and HE normal weight initialization.
+As mentioned previously, the highest performing model achieved 80.8% accuracy on the test dataset. This model used the deep0 architecture with a learning rate of 0.0005, 20 epochs, and HE normal weight initialization.
 
 ### Confusion Matrix
 The classes for the confusion matrix are listed here:  
@@ -100,7 +99,7 @@ The classes for the confusion matrix are listed here:
 The matrix for the test dataset is depicted below:  
 ![confusion_matrix](/readme_images/confusion_matrix.png)  
 
-If you follow the diagonal, a few things pop out. First, the metal genre (index 6) has the highest accuracy in the test dataset. Second, the rock genre has the lowest accuracy and is most commonly confused with the country music genre. This tells that, in general, the model should be pretty good at accurately classifying metal music, but pretty bad at classifying rock music.
+If you follow the diagonal, a few things pop out. First, the metal genre (index 6) has the highest accuracy in the test dataset. Second, the rock genre has the lowest accuracy and is most commonly confused with the country music genre. This tells us that, in general, the model should be pretty good at accurately classifying metal music, but not bery good at classifying rock music.
 
 ### Precision, Recall, and F1 Score
 Below is a classification report for each genre:  
@@ -120,21 +119,21 @@ Below is a classification report for each genre:
 
 The precision is calculated as: # of true positives / (# of true positives + # of false positives). This tells us how good the model is at correctly classifying each genre. The model may still miss quite a few positives, but a high precision means that the model is not missing very many positives. We can see that jazz music (index 5) has a perfect precision for the test dataset while country and rock music have lower precisions. This tells us that other genres are likely to be falsely classified as country and rock genres.
 
-The recall is calculates as: # of true positives / (# of true positives + # of false negatives). In this scenario, a false negative would be a sample that is wrongly classified as a different genre. This metric tells us how well the model can find all of the positive classifications for each genre, even if some of those postives are wrongly identified. We can see that rock music has the lowest recall. This means that the model is not very good at finding all of the positive cases for rock genres in the test dataset.
+The recall is calculated as: # of true positives / (# of true positives + # of false negatives). In this scenario, a false negative would be a sample that is wrongly classified as a different genre. This metric tells us how well the model can find all of the positive classifications for each genre, even if some of those positives are wrongly identified. We can see that rock music has the lowest recall. This means that the model is not very good at finding all of the positive cases for rock genres in the test dataset.
 
 The F1 score combines the previous two metrics into a single metric by calculating the average of the precision and recall. A high F1 score indicates that both precision and recall are high. Thus, we can see that classical music has the highest F1 score and rock has the lowest. This means that the model is good at classifying classical music in the test dataset and bad at classifying rock music.
 
 ## Real World Testing
-In addition to developing the model, I also created a web application to test the model on any song of your choice. The web application, which is linked at the top of this README, allows the user to enter the name of a song on YouTube, extracts three 3-second samples from the audio, then runs these sampls through the model and shows the results. Here are some sample outputs:
+In addition to developing the model, I also created a web application to test the model on any song of your choice. The web application, which is linked at the top of this README, allows the user to enter the name of a song on YouTube, extracts three 3-second samples from the audio, then runs these samples through the model and shows the results. Here are some sample outputs:
 
 ![chopin](/readme_images/chopin.png)  
-We can see above that 2 of the three samples from the song are correctly classified as classical music. Not bad.  
+We can see above that 2 of the three samples from the Chopin song are correctly classified as classical music. Not bad.  
 
 ![katy_perry](/readme_images/katy_perry.png)  
 In the above Katy Perry samples we also see that the model correctly classifies the genre as pop.  
   
 ![dr_dre](/readme_images/dr_dre.png)  
-However, in the results from Dr. Dre, we see that only the middle sampel is correctly classified as hiphop. The other samples are either completely wrong or show multiple genres as having a high probability.  
+However, in the results from Dr. Dre, we see that only the middle sample is correctly classified as hiphop. The other samples are either completely wrong or show multiple genres as having a high probability.  
 
 These results indicate that, while the model may perform well on some genres in the test dataset, it doesn't always perform well on real world data.
 
