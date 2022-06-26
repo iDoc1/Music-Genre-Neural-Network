@@ -1,0 +1,1 @@
+web: gunicorn --chdir ./music_genre_classifier_server/ wsgi:app

@@ -5,12 +5,25 @@ from genre_classifier import MusicGenreClassifier
 from flask_cors import CORS
 
 # Configuration
-app = Flask(__name__)
+app = Flask(__name__, static_folder='../music_genre_classifier_ui/build', static_url_path='/')
 CORS(app)
 classifier = MusicGenreClassifier()
 
 
 # Routes
+@app.route('/')
+def index():
+    """
+    Returns the React UI production build files
+    """
+    return app.send_static_file('index.html')
+
+
+@app.errorhandler(404)
+def not_found(e):
+    return app.send_static_file('index.html')
+
+
 @app.route('/youtube-search-results', methods=['GET'])
 def get_youtube_results():
     """
@@ -71,4 +84,4 @@ if __name__ == "__main__":
     #                                 ^^^^
     #              You can replace this number with any valid port
 
-    app.run(port=port, debug=True)
+    app.run(port=port, debug=False)
