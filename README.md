@@ -15,6 +15,8 @@ model in a real-world setting. For more information on how accurate the model is
 
 LINK TO DEPLOYED WEB APP: https://cnn-music-genre-classifier.herokuapp.com/
 
+PLEASE NOTE: Due to the size of the model and the small memory limits of the Heroku free version, running too many back-to-back requests on the model may cause the app to crash due to exceeding the Heroku memory limit. 
+
 You'll notice that there are three main project directories, as described below:  
 * model_development: contains all the scripts I used to prepare the data, build, and train the model
 * music_genre_classifier_ui: contains the code used to build the React UI
