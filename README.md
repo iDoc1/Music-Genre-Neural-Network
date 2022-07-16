@@ -9,9 +9,11 @@ For this project I decided to use the GTZAN dataset to train a model that can cl
 dataset is very popular and easily accessible, but it does have limitations, which I'll describe later on. The 
 dataset consists of 10 genres with 100 songs each. Each song is roughly 30 seconds long.
 
-In addition to building and training the model, I also built a web application that will allow a user to choose
-a YouTube video to test the model with. The website provides a quick and easy way to test the accuracy of the 
-model in a real-world setting.
+In addition to building and training the model, I built a web application that allows a user to choose
+audio from YouTube to test the model on. The website provides a quick and easy way to test the accuracy of the 
+model in a real-world setting. For more information on how accurate the model is on real-world data, see the discussion towards the end of this README. To go straight to the deployed project, see the below link.
+
+LINK TO DEPLOYED WEB APP: https://cnn-music-genre-classifier.herokuapp.com/
 
 You'll notice that there are three main project directories, as described below:  
 * model_development: contains all the scripts I used to prepare the data, build, and train the model

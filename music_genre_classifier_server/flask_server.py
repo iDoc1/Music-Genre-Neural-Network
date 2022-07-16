@@ -7,8 +7,6 @@ from flask_cors import CORS
 # Configuration
 app = Flask(__name__, static_folder='../music_genre_classifier_ui/build', static_url_path='/')
 CORS(app)
-classifier = MusicGenreClassifier()
-
 
 # Routes
 @app.route('/')
@@ -74,7 +72,7 @@ def model_results():
     if query_param == "" or query_param is None or query_param == "null":
         return jsonify([])
 
-    results = classifier.classify_youtube_audio(query_param)
+    results = MusicGenreClassifier().classify_youtube_audio(query_param)
     return jsonify(results)
 
 
