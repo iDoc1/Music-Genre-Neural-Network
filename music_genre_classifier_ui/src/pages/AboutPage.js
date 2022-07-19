@@ -12,7 +12,7 @@ function AboutPage() {
         <h3>How to Use This Website</h3>
         <p className='aboutPageParagraph'>
             The purpose of this website is to provide a way to visualize how well the neural network
-            model classifies music genres in real-worl scenarios. To use the tool, simply go to the
+            model classifies music genres in real-world scenarios. To use the tool, simply go to the
             Model Accuracy Tester page, enter the name of a song you would like to test, click on the
             YouTube thumbnail image that pops up, then view the results for audio samples taken from
             the start, middle, and end of the selected audio.
@@ -55,7 +55,7 @@ function AboutPage() {
             myself the fundamentals of machine learning using traditional and convolutional neural networks. 
             Instead of simply building and training a neural network, I wanted to try and build something 
             that would actually use the resulting model. That's where the idea for this website came from.
-            Now, I have a framework which I can use to evaluate the accuracy of a model. I encourage you 
+            Now, I have a tool that I can use to evaluate the accuracy of a model. I encourage you 
             to check out the GitHub link if you're interested in learning more about how the model was
             developed.
         </p>
