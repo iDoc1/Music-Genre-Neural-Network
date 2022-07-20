@@ -162,10 +162,3 @@ class AudioLengthTooLowError(Exception):
     the minimum specified length
     """
     pass
-
-
-if __name__ == "__main__":
-    classifier = MusicGenreClassifier()
-    # classifier.classify_youtube_audio("https://www.youtube.com/watch?v=pAgnJDJN4VA&ab_channel=acdcVEVO")
-    # classifier.classify_youtube_audio("https://www.youtube.com/watch?v=u9Dg-g7t2l4&ab_channel=Disturbed")
-    print(classifier.classify_youtube_audio("https://www.youtube.com/watch?v=BSzSn-PRdtI&ab_channel=Maroon5VEVO"))

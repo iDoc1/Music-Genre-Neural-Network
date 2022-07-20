@@ -53,13 +53,3 @@ class YouTubeSearch:
             video_title_list.append(html.unescape(video['snippet']['title']))  # Unescape HTML chars like '&'
 
         return video_title_list
-
-
-# Test code to print search results for a specified query
-if __name__ == "__main__":
-    search = YouTubeSearch("green day", 3, "medium")
-    print(search.get_video_ids())
-    print(search.get_video_titles())
-    search = YouTubeSearch("green day", 2, "short")
-    print(search.get_video_ids())
-    print(search.get_video_titles())
