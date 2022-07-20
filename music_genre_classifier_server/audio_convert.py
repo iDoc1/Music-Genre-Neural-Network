@@ -72,11 +72,3 @@ class ConvertedAudioWav:
 
     def get_file_name(self):
         return self._file_name
-
-
-# Test code
-if __name__ == "__main__":
-    convert = ConvertedAudioWav("ACDC - Back In Black (Official Video).mp3")
-    print(convert.get_filetype())
-    convert.convert_mp3_to_wav()
-    # convert.delete_wav_file()

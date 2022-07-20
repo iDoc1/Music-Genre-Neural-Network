@@ -62,12 +62,3 @@ class YouTubeAudioMp3:
         """
         if self._audio_filepath is not None:
             return self._audio_filepath.replace("\\", "/")  # User posix forward slash
-
-
-# Test code to download a video
-if __name__ == "__main__":
-    yt = YouTubeAudioMp3("https://www.youtube.com/watch?v=pAgnJDJN4VA&ab_channel=acdcVEVO")
-    yt.download_and_save_audio_file()
-    print(yt.get_filepath())
-    print(yt.get_file_name())
-    yt.delete_audio_file()
